@@ -4,6 +4,7 @@
 // Assignment: Assignment 2: Phone Book
 
 // Purpose:
+// limit phone number to 14 chars (1-360-xxx-xxxx)
 
 class ListNode
 {
@@ -11,17 +12,15 @@ class ListNode
     public String lastName;
     public String address;
     public String city;
-    public inStringt phoneNumber;
-    public ListNode next;
+    public String phoneNumber;
+    public ListNode next = null;
 
-    public ListNode(String firstName, String lastName, String address, String city, String phoneNumber, ListNode next)
+    public ListNode(String firstName, String lastName, String address, String city, String phoneNumber)
     {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.city = city;
         this.phoneNumber = phoneNumber;
-        this.next = next;
     }
-
 } // end of ListNode class
