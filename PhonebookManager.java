@@ -4,7 +4,21 @@
 // Assignment: Assignment 2: Phone Book
 
 // Purpose:
-// create .next with another var
+
+// to do
+    // add more to toString to look fancier
+    // add delete
+        // fields and nodes?
+            // make field null
+    // add modify
+        // modify data & modify node? 
+    // -----------.get
+        // make better way change specific inputted datatype (e.g. city)
+    // is last node supposed to link to first?
+    // limit length or make other solution to long entries
+        // limit phone number chars
+    // check if any exceptions need to be thrown (indexoutofbounds)
+
 
 class PhonebookManager
 {
@@ -13,11 +27,13 @@ class PhonebookManager
     private ListNode nodeTraveler = null; // used to travel through nodes
     private int phonebookSize = 0; // used for .size
 
+
+
     public PhonebookManager(String firstName, String lastName, String address, String city, String phoneNumber)
     {
         this.firstEntry = new ListNode(firstName, lastName, address, city, phoneNumber); // creates first node
         this.lastNodeTracker = this.firstEntry; // assigns lastnodetracker to node
-        phonebookSize++;
+        this.phonebookSize++;
     } // end of PhonebookManager constructor method
 
 
@@ -30,7 +46,72 @@ class PhonebookManager
         phonebookSize++;
     } // end of newNode method
 
-    
+
+
+    public ListNode index(int index)
+    {
+        nodeTraveler = firstEntry;
+        for(int i = 0; i < index; i++)
+            {nodeTraveler = nodeTraveler.next;}
+        return nodeTraveler;
+    } // end of index method
+
+
+
+    // make more efficent way to find out what data needs be changed
+    public void modify(int index, String Data, String newData)
+    {
+        ListNode modifiedData = index(index);
+        switch(Data.toLowerCase())
+        {
+            case "firstname":
+                modifiedData.firstName = newData;
+                break;
+            case "lastname":
+                modifiedData.lastName = newData;
+                break;
+            case "address":
+                modifiedData.address = newData;
+                break;
+            case "city":
+                modifiedData.city = newData;
+                break;
+            case "phonenumber":
+                modifiedData.phoneNumber = newData;
+                break;
+        }
+    } // end of modifyData method
+
+
+    // make sure firstEntry and lastNodeTracker will still work
+    public void delete(int index)
+    {
+        // index to node before deleted one connects to index after
+        firstEntry.next = lastNodeTracker;
+        System.out.println(lastNodeTracker);
+    } // end of delete method
+
+
+ 
+    public String get(int index, String data)
+    {
+        ListNode get = index(index);
+        switch(data.toLowerCase())
+        {
+            case "firstname":
+                return get.firstName;
+            case "lastname":
+                return get.lastName;
+            case "address":
+                return get.address;
+            case "city":
+                return get.city;
+            case "phonenumber":
+                return get.phoneNumber;
+            default:
+                return "ERROR";
+        }
+    }
 
     public int size()
     {

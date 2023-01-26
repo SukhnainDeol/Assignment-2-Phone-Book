@@ -4,7 +4,6 @@
 // Assignment: Assignment 2: Phone Book
 
 // Purpose:
-// limit phone number to 14 chars (1-360-xxx-xxxx)
 
 class ListNode
 {
