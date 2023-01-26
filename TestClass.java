@@ -12,7 +12,8 @@ class TestClass
     {
         PhonebookManager test = new PhonebookManager("Joe", "Allen", "4973 Yellow Brick Road", "Bellingham", "360-224-7793");
         test.newNode("Joeaaa", "Allen", "4973 Yellow Brick Road", "Bellingham", "360-224-7793");
-        test.newNode("Joeaaa", "Allen", "4973 Yellow Brick Road", "Bellingham", "360-224-77a93");
+        test.newNode("Joea12aa", "Allen", "4973 Yellow Brick Road", "Bellingham", "360-224-77a93");
+
 
 
         test.delete(1);

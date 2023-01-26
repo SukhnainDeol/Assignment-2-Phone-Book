@@ -22,4 +22,25 @@ class ListNode
         this.city = city;
         this.phoneNumber = phoneNumber;
     }
+
+
+    public String toString()
+    {
+        String toString = ""; // return value
+
+        // calcs length of all data (including space and puncutation)
+        int fullLength = firstName.length()+ lastName.length()+address.length()+city.length()+phoneNumber.length()+5;
+
+        // adds first parts of phonebook
+        toString += (firstName + " " + lastName + "  " + address + ", " + city);
+
+        // uses calculated length to put appropiate amount of '.' before phoneNumber
+        for(int j = 0; j < 100 - fullLength; j++)
+            {toString += ".";}
+
+        // adds phoneNumber
+        toString += phoneNumber + "\n";
+
+        return toString;
+    } // end of toString method
 } // end of ListNode class

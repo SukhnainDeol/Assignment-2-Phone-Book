@@ -84,11 +84,12 @@ class PhonebookManager
 
 
     // make sure firstEntry and lastNodeTracker will still work
+        // reassign with index method?
     public void delete(int index)
     {
         // index to node before deleted one connects to index after
         firstEntry.next = lastNodeTracker;
-        System.out.println(lastNodeTracker);
+        phonebookSize--; // reduces total size
     } // end of delete method
 
 
