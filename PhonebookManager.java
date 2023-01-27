@@ -14,17 +14,16 @@
         // modify data & modify node? 
     // -----------.get
         // make better way change specific inputted datatype (e.g. city)
-    // is last node supposed to link to first?
     // limit length or make other solution to long entries
         // limit phone number chars
     // check if any exceptions need to be thrown (indexoutofbounds)
+    // add new entry at specific index
 
 
 class PhonebookManager
 {
     private ListNode firstEntry = null; // always at first node
     private ListNode lastNodeTracker = null; // always at last node
-    private ListNode nodeTraveler = null; // used to travel through nodes
     private int phonebookSize = 0; // used for .size
 
 
@@ -42,7 +41,6 @@ class PhonebookManager
     {
         lastNodeTracker.next = new ListNode(firstName, lastName, address, city, phoneNumber); // makes new node
         lastNodeTracker = lastNodeTracker.next; // moves lastNodeTracker to new last node
-        lastNodeTracker.next = firstEntry; // links last node to first node
         phonebookSize++;
     } // end of newNode method
 
@@ -50,7 +48,7 @@ class PhonebookManager
 
     public ListNode index(int index)
     {
-        nodeTraveler = firstEntry;
+        ListNode nodeTraveler = firstEntry;
         for(int i = 0; i < index; i++)
             {nodeTraveler = nodeTraveler.next;}
         return nodeTraveler;
@@ -88,7 +86,7 @@ class PhonebookManager
     public void delete(int index)
     {
         // index to node before deleted one connects to index after
-        firstEntry.next = lastNodeTracker;
+        index(index-1).next = index(index+1);
         phonebookSize--; // reduces total size
     } // end of delete method
 
@@ -119,8 +117,24 @@ class PhonebookManager
         return phonebookSize;
     } // end of size method
 
+    public String toString()
+    {
+        ListNode nodeTraveler = firstEntry;
+        String toString = "";
+        for (int i = 0; i<phonebookSize; i++)
+        {
+            toString += "Contact " + (i+1); 
+            toString += "\nName: " + nodeTraveler.firstName + " " + nodeTraveler.lastName;
+            toString += "\nAddress: " + nodeTraveler.address;
+            toString += "\nCity: " + nodeTraveler.city;
+            toString += "\nPhone Number: " + nodeTraveler.phoneNumber + "\n\n";
+            nodeTraveler = nodeTraveler.next;
+        }
 
+        return toString;
+    }
 
+    /* remove
     public String toString()
     {
         nodeTraveler = firstEntry; // starts traveler at first node
@@ -147,4 +161,5 @@ class PhonebookManager
 
         return toString;
     } // end of toString method
+    */
 } // end of PhonebookManager class

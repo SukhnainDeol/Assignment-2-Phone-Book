@@ -23,7 +23,7 @@ class ListNode
         this.phoneNumber = phoneNumber;
     }
 
-
+    /*  remove
     public String toString()
     {
         String toString = ""; // return value
@@ -43,4 +43,5 @@ class ListNode
 
         return toString;
     } // end of toString method
+    */
 } // end of ListNode class
