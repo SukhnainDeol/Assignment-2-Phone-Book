@@ -34,15 +34,20 @@ class TestClass
                     break;
                 case "2":
                 case "delete entry":
-                    System.out.println("\nEnter Contact Number: ");
-                    int deleteIndex;
-                    if(in.hasNextInt())
+                    if (test.size() == 0)
+                        {System.out.println("\nERROR: Phonebook is Empty");}
+                    else
+                    {
+                        System.out.print("\nEnter Contact Number: ");
+                        int deleteIndex;
+                        if(in.hasNextInt())
                         { // deletes deletetIndex value from phonebook
                             deleteIndex = in.nextInt();
-                            test.delete(deleteIndex+1);
+                            test.delete(deleteIndex-1);
                         }
-                    else
-                        {System.out.println("ERROR: Input is not a Number");}
+                        else
+                            {System.out.println("ERROR: Input is not a Number");}
+                    }
                     break;
                 case "3":
                 case "view phonebook":
@@ -82,16 +87,45 @@ class TestClass
                         {System.out.println("Phone Number - " + phoneNumber + "'s information is in contact " + (phoneIndex+1));}
                     break;
                 case "7":
-                case "edit name":
-                    System.out.println("");
+                case "edit first name":
+                        // make sure
+                    System.out.println("Which contact number's name would you like to edit?: ");
+                    if (in.hasNextInt())
+                    {
+                        int editNameIndex = in.nextInt();
+                        System.out.println("Enter new first name: ");
+                        String newName = in.nextLine();
+                        test.modifyFirstName(editNameIndex, newName);
+                        System.out.println("Enter new last name: ");
+                        String newLastName = in.nextLine();
+                        test.modifyLastName(editNameIndex, newLastName);
+                    }
                     break;
                 case "8":
                 case "edit address":
-                    System.out.println("");
+                    System.out.println("Which contact number's address would you like to edit?: ");
+                    if(in.hasNextInt())
+                    {
+                        int editAddressIndex = in.nextInt();
+                        System.out.println("Enter new address: ");
+                        String newAddress = in.nextLine();
+                        test.modifyAddress(editAddressIndex, newAddress);
+                    }
+                    else
+                        {System.out.println("ERROR: Input is not a Number");}
                     break;
                 case "9":
                 case "edit phone number":
-                    System.out.println("WOrks");
+                    System.out.println("Which contact number's phone number would you like to edit?: ");
+                    if(in.hasNextInt())
+                    {
+                        int editPhoneIndex = in.nextInt();
+                        System.out.println("Enter new phone number: ");
+                        String newPhoneNumber = in.nextLine();
+                        test.modifyPhoneNumber(editPhoneIndex, newPhoneNumber);
+                    }
+                    else
+                        {System.out.println("ERROR: Input is not a Number");}
                     break;
                 case "0":
                 case "quit":

@@ -7,9 +7,7 @@
 
 // to do
     // add more to toString to look fancier
-    // add delete
-        // fields and nodes?
-            // make field null
+
     // add modify
         // modify data & modify node? 
     // -----------.get
@@ -18,6 +16,10 @@
     // add new entry at specific index
 
     // decide wheter 1 modify method (with data type parameter) or 5 modify methods (one for each data type)
+    // delete method
+        // delete node
+        // delete field
+        // adjust first and last entry listnodes
 
 
 class PhonebookManager
@@ -208,7 +210,24 @@ class PhonebookManager
     public void delete(int index)
     {
         // index to node before deleted one connects to index after
-        index(index-1).next = index(index+1);
+        if (index == 0 && index == phonebookSize-1) // if deleting only node
+        {
+            firstEntry = null; 
+            lastNodeTracker = null;
+        } 
+        else
+        {
+            if(index == 0) // if deleting first node
+            {firstEntry = index(index+1);} // firstEntry is now at index after deleted node
+            else if(index == phonebookSize-1) // if deleting last node
+            {
+                lastNodeTracker = index(index-1);
+                lastNodeTracker.next = null;
+            } // lastNodeTracker is now at index before deleted node
+            else // if deleting node in middle of list
+                {index(index-1).next = index(index+1);} // index before deleted node connects to index after
+        }
+        
         phonebookSize--; // reduces total size
     } // end of delete method
 
