@@ -14,10 +14,10 @@
         // modify data & modify node? 
     // -----------.get
         // make better way change specific inputted datatype (e.g. city)
-    // limit length or make other solution to long entries
-        // limit phone number chars
     // check if any exceptions need to be thrown (indexoutofbounds)
     // add new entry at specific index
+
+    // decide wheter 1 modify method (with data type parameter) or 5 modify methods (one for each data type)
 
 
 class PhonebookManager
@@ -27,7 +27,7 @@ class PhonebookManager
     private int phonebookSize = 0; // used for .size
 
 
-
+    // constructor method
     public PhonebookManager(String firstName, String lastName, String address, String city, String phoneNumber)
     {
         this.firstEntry = new ListNode(firstName, lastName, address, city, phoneNumber); // creates first node
@@ -36,13 +36,104 @@ class PhonebookManager
     } // end of PhonebookManager constructor method
 
 
+    public PhonebookManager(){}
 
+
+
+    // make sure indexing is working right
+    // index error message
+    public void newNode(String firstName, String lastName, String address, String city, String phoneNumber, int index)
+    {
+        if(lastNodeTracker == null)
+        {
+            firstEntry = new ListNode(firstName, lastName, address, city, phoneNumber);
+            lastNodeTracker = firstEntry;
+            phonebookSize++;
+        }
+        else
+        {
+            ListNode nodeTravelerOne = firstEntry; // starts traveler at first node
+            ListNode nodeTravelerTwo; // starts traveler at first node
+
+            for(int i = 0; i < index-1; i++) // loops through all elements
+                {nodeTravelerOne = nodeTravelerOne.next; } // moves nodeTravelerOne to index before new node
+            nodeTravelerTwo = nodeTravelerOne.next; // nodeTravelerTwo is now at index after new node
+
+            // adds new node
+            nodeTravelerOne.next = new ListNode(firstName, lastName, address, city, phoneNumber); 
+            nodeTravelerOne.next.next = nodeTravelerTwo; // connects new node to node after 
+            
+            if(index == phonebookSize) // if new node is at end of list
+                {lastNodeTracker = nodeTravelerOne.next;} // lastNodeTracker is now at new last node
+            phonebookSize++;
+        }
+    } // end of newNode method
+
+
+
+    // overloaded newnode with no index, defaults to end of linked list
     public void newNode(String firstName, String lastName, String address, String city, String phoneNumber)
     {
-        lastNodeTracker.next = new ListNode(firstName, lastName, address, city, phoneNumber); // makes new node
-        lastNodeTracker = lastNodeTracker.next; // moves lastNodeTracker to new last node
-        phonebookSize++;
+        if(lastNodeTracker == null)
+        {
+            firstEntry = new ListNode(firstName, lastName, address, city, phoneNumber);
+            lastNodeTracker = firstEntry;
+            phonebookSize++;
+        }
+        else
+        {
+            lastNodeTracker.next = new ListNode(firstName, lastName, address, city, phoneNumber); // makes new node
+            lastNodeTracker = lastNodeTracker.next; // moves lastNodeTracker to new last node
+            phonebookSize++;
+        }
+        
     } // end of newNode method
+
+
+
+    // decide between first & last vs full
+    public int searchName(String name)
+    {
+        ListNode nodeTraveler = firstEntry;
+        // traverse linked list 
+        for(int i = 0; i < phonebookSize; i++)
+        {   // if name in node equals name in parameter
+            if((nodeTraveler.firstName+" "+nodeTraveler.lastName).equals(name))
+                {return i;} // return index of node
+            nodeTraveler = nodeTraveler.next;
+        }
+        return -1; // return -1 if name is not found
+    } // end of indexName method
+
+
+
+    public int searchAddress(String address)
+    {
+        ListNode nodeTraveler = firstEntry;
+        // traverse linked list 
+        for(int i = 0; i < phonebookSize; i++)
+        {   // if address in node equals name in parameter
+            if(nodeTraveler.address.equals(address))
+                {return i;} // return index of node
+            nodeTraveler = nodeTraveler.next;
+        }
+        return -1; // return -1 if address is not found
+    } // end of indexAddress method
+
+
+
+    public int searchPhoneNumber(String phoneNumber)
+    {
+        ListNode nodeTraveler = firstEntry;
+        // traverse linked list 
+        for(int i = 0; i < phonebookSize; i++)
+        {   // if phoneNumber in node equals name in parameter
+            if(nodeTraveler.phoneNumber.equals(phoneNumber))
+                {return i;} // return index of node
+            nodeTraveler = nodeTraveler.next;
+        }
+        return -1; // return -1 if phoneNumber is not found
+    } // end of indexPhoneNumber method
 
 
 
@@ -80,6 +171,37 @@ class PhonebookManager
         }
     } // end of modifyData method
 
+    public void modifyFirstName(int index, String newData)
+    {
+        ListNode modifiedData = index(index);
+        modifiedData.firstName = newData;
+    } // end of modifyFirstName method
+
+    public void modifyLastName(int index, String newData)
+    {
+        ListNode modifiedData = index(index);
+        modifiedData.lastName = newData;
+    } // end of modifyLastName method
+
+    public void modifyAddress(int index, String newData)
+    {
+        ListNode modifiedData = index(index);
+        modifiedData.address = newData;
+    } // end of modifyAddress method
+
+    public void modifyCity(int index, String newData)
+    {
+        ListNode modifiedData = index(index);
+        modifiedData.city = newData;
+    } // end of modifyCity method
+
+    public void modifyPhoneNumber(int index, String newData)
+    {
+        ListNode modifiedData = index(index);
+        modifiedData.phoneNumber = newData;
+    } // end of modifyPhoneNumber method
+
+    
 
     // make sure firstEntry and lastNodeTracker will still work
         // reassign with index method?
