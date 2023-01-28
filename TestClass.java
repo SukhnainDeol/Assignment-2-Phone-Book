@@ -60,16 +60,16 @@ class TestClass
                     System.out.print("\nEnter the First and Last Name to Search: ");
                     String name = in.nextLine(); // takes full name
                     Queue<Integer> nameIndex = test.searchName(name); // searches for name
-                    if(nameIndex.size() <= 0) // -1 means not found
+                    if(nameIndex.size() <= 0) // if name not found (queue is empty)
                         {System.out.println("ERROR: Name not found");}
-                    else if(nameIndex.size() == 1)  // else, returns contact number of name
+                    else if(nameIndex.size() == 1)  // if 1 name found 
                         {System.out.println(name + "'s information is in contact " + (nameIndex.remove()+1));}
-                    else if(nameIndex.size() > 1)
+                    else if(nameIndex.size() > 1) // if multuple names found
                     {
                         System.out.println("There are "+nameIndex.size()+" occurences of a person named " + name + " in the phonebook.");
                         System.out.println("These occurences are in the following contact numbers:");
                         int nameIndexSize = nameIndex.size();
-                        for(int i = 0; i < nameIndexSize; i++)
+                        for(int i = 0; i < nameIndexSize; i++) // print each name from queue
                             {System.out.println("Contact Number " + (nameIndex.remove()+1));}
                     }
                     break;
