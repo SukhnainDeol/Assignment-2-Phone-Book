@@ -7,7 +7,7 @@
 // to do:
     // add choice to add entry at specific index
 
-import java.util.Scanner;
+import java.util.*;
 
 class TestClass
 {
@@ -29,8 +29,7 @@ class TestClass
                 case "add entry":
                     // turn into method
                     String[] newEntry = newEntryInput(in);
-                    test.newNode(newEntry[0], newEntry[1], newEntry[2], newEntry[3], newEntry[4]);
-                    System.out.println("\nNew Entry Added");
+                    test.newNode(newEntry[0], newEntry[1], newEntry[2], newEntry[3], newEntry[4], Integer.parseInt(newEntry[5])-1);
                     break;
                 case "2":
                 case "delete entry":
@@ -58,17 +57,25 @@ class TestClass
                     break;
                 case "4":
                 case "search name":
-                    System.out.print("\nEnter First and Last Name to Search: ");
+                    System.out.print("\nEnter the First and Last Name to Search: ");
                     String name = in.nextLine(); // takes full name
-                    int nameIndex = test.searchName(name); // searches for name
-                    if(nameIndex == -1) // -1 means not found
+                    Queue<Integer> nameIndex = test.searchName(name); // searches for name
+                    if(nameIndex.size() <= 0) // -1 means not found
                         {System.out.println("ERROR: Name not found");}
-                    else // else, returns contact number of name
-                        {System.out.println(name + "'s information is in contact " + nameIndex+1);}
+                    else if(nameIndex.size() == 1)  // else, returns contact number of name
+                        {System.out.println(name + "'s information is in contact " + (nameIndex.remove()+1));}
+                    else if(nameIndex.size() > 1)
+                    {
+                        System.out.println("There are "+nameIndex.size()+" occurences of a person named " + name + " in the phonebook.");
+                        System.out.println("These occurences are in the following contact numbers:");
+                        int nameIndexSize = nameIndex.size();
+                        for(int i = 0; i < nameIndexSize; i++)
+                            {System.out.println("Contact Number " + (nameIndex.remove()+1));}
+                    }
                     break;
                 case "5":
                 case "search address":
-                    System.out.print("\nEnter Address to Search: ");
+                    System.out.print("\nEnter the Address to Search: ");
                     String address = in.nextLine(); 
                     int addressIndex = test.searchAddress(address); // searches for address
                     if(addressIndex == -1) // -1 means not found
@@ -78,7 +85,7 @@ class TestClass
                     break;
                 case "6":
                 case "search phone number":
-                    System.out.print("\nEnter Phone Number to Search: ");
+                    System.out.print("\nEnter the Phone Number to Search: ");
                     String phoneNumber = in.nextLine();
                     int phoneIndex = test.searchPhoneNumber(phoneNumber); // searches for phone number
                     if(phoneIndex == -1) // -1 means not found
@@ -162,7 +169,9 @@ class TestClass
 
     public static String[] newEntryInput(Scanner in) 
     {
-        String[] newEntry = new String[5]; // array to hold new entry info
+        boolean correctIndex = false;
+        String[] newEntry = new String[6]; // array to hold new entry 
+        
         // get all info for new entry then use newNode method
         System.out.print("\nEnter First Name: ");
         newEntry[0] = in.next();
@@ -176,7 +185,19 @@ class TestClass
         newEntry[3] = in.next();
         System.out.print("Enter Phone Number: ");
         newEntry[4] = in.next();
-
+        while(correctIndex == false)
+        {
+            System.out.print("Contact Number of New Entry: ");
+            if(in.hasNextInt())
+                {
+                    newEntry[5] = in.next();
+                    correctIndex = true;
+                }
+            else
+                {System.out.println("ERROR: Please Give A Numerical Input");}
+            in.nextLine(); // incase multi word input, clear line for next input
+        }
+        
         return newEntry;
     } // end of newEntryInput method
 } // end of TestClass class

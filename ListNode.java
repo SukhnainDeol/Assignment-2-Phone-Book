@@ -3,17 +3,21 @@
 // Date 01/24/2023
 // Assignment: Assignment 2: Phone Book
 
-// Purpose:
+// Purpose: Defines a Listnode class that is used to implement a linked list
+// in the class PhonebookManager.
 
 class ListNode
 {
-    public String firstName;
-    public String lastName;
-    public String address;
-    public String city;
-    public String phoneNumber;
+    public String firstName = null;
+    public String lastName = null;
+    public String address = null;
+    public String city = null;
+    public String phoneNumber = null;
     public ListNode next = null;
 
+    
+
+    // constructor with all fields as parameters except next
     public ListNode(String firstName, String lastName, String address, String city, String phoneNumber)
     {
         this.firstName = firstName;
@@ -21,28 +25,10 @@ class ListNode
         this.address = address;
         this.city = city;
         this.phoneNumber = phoneNumber;
-    }
+    } // end of ListNode constructor method
 
+    
 
-    /*  remove
-    public String toString()
-    {
-        String toString = ""; // return value
-
-        // calcs length of all data (including space and puncutation)
-        int fullLength = firstName.length()+ lastName.length()+address.length()+city.length()+phoneNumber.length()+5;
-
-        // adds first parts of phonebook
-        toString += (firstName + " " + lastName + "  " + address + ", " + city);
-
-        // uses calculated length to put appropiate amount of '.' before phoneNumber
-        for(int j = 0; j < 100 - fullLength; j++)
-            {toString += ".";}
-
-        // adds phoneNumber
-        toString += phoneNumber + "\n";
-
-        return toString;
-    } // end of toString method
-    */
+    // no paremeter constructor
+    public ListNode() {}
 } // end of ListNode class
