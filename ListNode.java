@@ -15,16 +15,24 @@ class ListNode
     public String phoneNumber = null;
     public ListNode next = null;
 
-    
 
     // constructor with all fields as parameters except next
-    public ListNode(String firstName, String lastName, String address, String city, String phoneNumber)
+    public ListNode(String firstName, String lastName, String address, String city, String phoneNumber, ListNode next)
     {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.city = city;
         this.phoneNumber = phoneNumber;
+        this.next = next;
+    } // end of ListNode constructor method
+    
+
+    // constructor with all fields as parameters except next
+    public ListNode(String firstName, String lastName, String address, String city, String phoneNumber)
+    {
+        // calls full paremeter constructor but makes next field null
+        this(firstName, lastName, address, city, phoneNumber, null);
     } // end of ListNode constructor method
 
     

@@ -5,31 +5,26 @@
 
 // Purpose:
 
+// if newNode not working, check new overloaded constructor
+// use iterator<E> and list<E> interfaces?
+// rename index method to atIndex
+
 // to do
-    // add more to toString to look fancier
-
-    // add modify
-        // modify data & modify node? 
-    // -----------.get
-        // make better way change specific inputted datatype (e.g. city)
-    // check if any exceptions need to be thrown (indexoutofbounds)
-    // add new entry at specific index
-
-    // decide wheter 1 modify method (with data type parameter) or 5 modify methods (one for each data type)
+    // finish search methods
+    // modify methods
     // delete method
-        // delete node
-        // delete field
-        // adjust first and last entry listnodes
-
-    // Test before Turn in
-        // NewNode()
+        // delete fields and nodes??????
+    // review get method
+    // double check everything
+    // clean up
+    // work on front end
 
 import java.util.*;
 
 class PhonebookManager
 {
     private ListNode firstEntry = null; // always at first node of linked list
-    private ListNode lastNodeTracker = null; // always at last node of linked list
+    private ListNode lastNodeTracker = null; // always at last node of linked list (use a while != null statement instead?)
     private int phonebookSize = 0; // used for .size method
 
 
@@ -80,9 +75,8 @@ class PhonebookManager
 
                     nodeTravelerTwo = nodeTravelerOne.next; // nodeTravelerTwo is now at index after new node
 
-                    // adds new node
-                    nodeTravelerOne.next = new ListNode(firstName, lastName, address, city, phoneNumber); 
-                    nodeTravelerOne.next.next = nodeTravelerTwo; // connects new node to node after 
+                    // adds new node and connects it to next
+                    nodeTravelerOne.next = new ListNode(firstName, lastName, address, city, phoneNumber, nodeTravelerTwo); 
                 
                     if(index == phonebookSize) // if new node is at end of list
                         {lastNodeTracker = nodeTravelerOne.next;} // lastNodeTracker is now at new last node          
@@ -105,46 +99,49 @@ class PhonebookManager
         for(int i = 0; i < phonebookSize; i++)
         {   // if name in node equals name in parameter
             if((nodeTraveler.firstName+" "+nodeTraveler.lastName).equals(name))
-                {foundNames.add(i);} // return index of node
-            nodeTraveler = nodeTraveler.next;
+                {foundNames.add(i);} // adds name
+            nodeTraveler = nodeTraveler.next; // moves to next node
         }
-        return foundNames; // return -1 if name is not found
+        return foundNames; // return found names 
     } // end of indexName method
 
 
 
     // searches linked list to find a nodes with given address
-    public int searchAddress(String address)
+    public Queue<Integer> searchAddress(String address)
     {
         ListNode nodeTraveler = firstEntry;
+        Queue<Integer> foundAddresses = new LinkedList<>();
         // traverse linked list 
         for(int i = 0; i < phonebookSize; i++)
         {   // if address in node equals name in parameter
             if(nodeTraveler.address.equals(address))
-                {return i;} // return index of node
-            nodeTraveler = nodeTraveler.next;
+                {foundAddresses.add(i);} // add address
+            nodeTraveler = nodeTraveler.next; // moves to next node
         }
-        return -1; // return -1 if address is not found
+        return foundAddresses; // return found addresses
     } // end of indexAddress method
 
 
 
     // searches linked list to find a node with given address
-    public int searchPhoneNumber(String phoneNumber)
+    public Queue<Integer> searchPhoneNumber(String phoneNumber)
     {
         ListNode nodeTraveler = firstEntry;
+        Queue<Integer> foundPhoneNumbers = new LinkedList<>();
         // traverse linked list 
         for(int i = 0; i < phonebookSize; i++)
         {   // if phoneNumber in node equals name in parameter
             if(nodeTraveler.phoneNumber.equals(phoneNumber))
-                {return i;} // return index of node
-            nodeTraveler = nodeTraveler.next;
+                {foundPhoneNumbers.add(i);} // add phone number
+            nodeTraveler = nodeTraveler.next; // moves to next node
         }
-        return -1; // return -1 if phoneNumber is not found
+        return foundPhoneNumbers; // return found phone numbers
     } // end of indexPhoneNumber method
 
 
 
+    // returns a listnode at a certain index in phonebook
     public ListNode index(int index)
     {
         ListNode nodeTraveler = firstEntry;
@@ -154,60 +151,37 @@ class PhonebookManager
     } // end of index method
 
 
+    
+    // next series of method modifiy a specific indexed node's specfic data
+    public void modifyFirstName(int index, String newFirstName)
+    {
+        ListNode modifiedData = index(index); // goes to node
+        modifiedData.firstName = newFirstName; // changes data
+    } // end of modifyFirstName mutator method
 
-    // make more efficent way to find out what data needs be changed
-    public void modify(int index, String Data, String newData)
+    public void modifyLastName(int index, String newLastName)
     {
         ListNode modifiedData = index(index);
-        switch(Data.toLowerCase())
-        {
-            case "firstname":
-                modifiedData.firstName = newData;
-                break;
-            case "lastname":
-                modifiedData.lastName = newData;
-                break;
-            case "address":
-                modifiedData.address = newData;
-                break;
-            case "city":
-                modifiedData.city = newData;
-                break;
-            case "phonenumber":
-                modifiedData.phoneNumber = newData;
-                break;
-        }
-    } // end of modifyData method
+        modifiedData.lastName = newLastName;
+    } // end of modifyLastName mutator method
 
-    public void modifyFirstName(int index, String newData)
+    public void modifyAddress(int index, String newAddress)
     {
         ListNode modifiedData = index(index);
-        modifiedData.firstName = newData;
-    } // end of modifyFirstName method
+        modifiedData.address = newAddress;
+    } // end of modifyAddress mutator method
 
-    public void modifyLastName(int index, String newData)
+    public void modifyCity(int index, String newCity)
     {
         ListNode modifiedData = index(index);
-        modifiedData.lastName = newData;
-    } // end of modifyLastName method
+        modifiedData.city = newCity;
+    } // end of modifyCity mutator method
 
-    public void modifyAddress(int index, String newData)
+    public void modifyPhoneNumber(int index, String newPhoneNumber)
     {
         ListNode modifiedData = index(index);
-        modifiedData.address = newData;
-    } // end of modifyAddress method
-
-    public void modifyCity(int index, String newData)
-    {
-        ListNode modifiedData = index(index);
-        modifiedData.city = newData;
-    } // end of modifyCity method
-
-    public void modifyPhoneNumber(int index, String newData)
-    {
-        ListNode modifiedData = index(index);
-        modifiedData.phoneNumber = newData;
-    } // end of modifyPhoneNumber method
+        modifiedData.phoneNumber = newPhoneNumber;
+    } // end of modifyPhoneNumber mutator method
 
     
 
@@ -239,31 +213,47 @@ class PhonebookManager
 
 
  
-    public String get(int index, String data)
+    public String getFirstName(int index, String data)
     {
         ListNode get = index(index);
-        switch(data.toLowerCase())
-        {
-            case "firstname":
-                return get.firstName;
-            case "lastname":
-                return get.lastName;
-            case "address":
-                return get.address;
-            case "city":
-                return get.city;
-            case "phonenumber":
-                return get.phoneNumber;
-            default:
-                return "ERROR";
-        }
-    }
+        return get.firstName;
+    } // end of getFirstName accessor method
+    
+    public String getLastName(int index, String data)
+    {
+        ListNode get = index(index);
+        return get.lastName;
+    } // end of getLastName accessor method
 
+    public String getAddress(int index, String data)
+    {
+        ListNode get = index(index);
+        return get.address;
+    } // end of getAddress accessor method
+
+    public String getCity(int index, String data)
+    {
+        ListNode get = index(index);
+        return get.city;
+    } // end of getCity accessor method
+
+    public String getPhoneNumber(int index, String data)
+    {
+        ListNode get = index(index);
+        return get.phoneNumber;
+    } // end of getPhoneNumber accessor method
+
+
+
+    // returns total number of nodes in phonebook
     public int size()
     {
         return phonebookSize;
     } // end of size method
 
+
+
+    // returns a formatted string containing information from the phonebook
     public String toString()
     {
         ListNode nodeTraveler = firstEntry;
@@ -280,34 +270,5 @@ class PhonebookManager
         }
 
         return toString;
-    }
-
-    /* remove
-    public String toString()
-    {
-        nodeTraveler = firstEntry; // starts traveler at first node
-        String toString = ""; // return value
-
-        for(int i = 0; i < phonebookSize; i++) // loops through all elements
-        {
-            // calcs length of all data (including space and puncutation)
-            int fullLength = nodeTraveler.firstName.length()+nodeTraveler.lastName.length()+nodeTraveler.address.length()+nodeTraveler.city.length()+nodeTraveler.phoneNumber.length()+5;
-
-            // adds first parts of phonebook
-            toString += (nodeTraveler.firstName + " " + nodeTraveler.lastName + "  " + nodeTraveler.address + ", " + nodeTraveler.city);
-
-            // uses calculated length to put appropiate amount of '.' before phoneNumber
-            for(int j = 0; j < 100 - fullLength; j++)
-                {toString += ".";}
-
-            // adds phoneNumber
-            toString += nodeTraveler.phoneNumber + "\n";
-
-            // goes to next node
-            nodeTraveler = nodeTraveler.next;
-        }
-
-        return toString;
     } // end of toString method
-    */
 } // end of PhonebookManager class
