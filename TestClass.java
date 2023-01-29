@@ -183,6 +183,7 @@ class TestClass
     } // end of printMenu method
 
 
+
     public static String[] newEntryInput(Scanner in) 
     {
         boolean correctIndex = false;
@@ -196,20 +197,21 @@ class TestClass
         newEntry[1] = in.next();
         in.nextLine(); // incase multi word input, clear line for next input
         System.out.print("Enter Address: ");
-        newEntry[2] = in.next();
+        newEntry[2] = in.nextLine();
         System.out.print("Enter City: ");
-        newEntry[3] = in.next();
+        newEntry[3] = in.nextLine();
         System.out.print("Enter Phone Number: ");
-        newEntry[4] = in.next();
+        newEntry[4] = in.nextLine();
+        // loop until valid contact number given
         while(correctIndex == false)
-        {
+        { 
             System.out.print("Contact Number of New Entry: ");
-            if(in.hasNextInt())
+            if(in.hasNextInt()) // if correct input, end loop 
                 {
                     newEntry[5] = in.next();
                     correctIndex = true;
                 }
-            else
+            else // print error message each failure
                 {System.out.println("ERROR: Please Give A Numerical Input");}
             in.nextLine(); // incase multi word input, clear line for next input
         }

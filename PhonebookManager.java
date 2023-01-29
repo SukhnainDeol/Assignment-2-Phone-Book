@@ -8,6 +8,7 @@
 // if newNode not working, check new overloaded constructor
 // use iterator<E> and list<E> interfaces?
 // rename index method to atIndex
+// decide whether first and last name should be in.next or in.nextLine
 
 // to do
     // test search methods
