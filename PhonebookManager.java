@@ -10,7 +10,7 @@
 // rename index method to atIndex
 
 // to do
-    // finish search methods
+    // test search methods
     // modify methods
     // delete method
         // delete fields and nodes??????

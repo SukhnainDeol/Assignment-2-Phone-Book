@@ -62,9 +62,9 @@ class TestClass
                     Queue<Integer> nameIndex = test.searchName(name); // searches for name
                     if(nameIndex.size() <= 0) // if name not found (queue is empty)
                         {System.out.println("ERROR: Name not found");}
-                    else if(nameIndex.size() == 1)  // if 1 name found 
+                    else if(nameIndex.size() == 1)  // if one instance of name found 
                         {System.out.println(name + "'s information is in contact " + (nameIndex.remove()+1));}
-                    else if(nameIndex.size() > 1) // if multuple names found
+                    else // if multuple instances of name found
                     {
                         System.out.println("There are "+nameIndex.size()+" occurences of a person named " + name + " in the phonebook.");
                         System.out.println("These occurences are in the following contact numbers:");
@@ -76,22 +76,38 @@ class TestClass
                 case "5":
                 case "search address":
                     System.out.print("\nEnter the Address to Search: ");
-                    String address = in.nextLine(); 
-                    int addressIndex = test.searchAddress(address); // searches for address
-                    if(addressIndex == -1) // -1 means not found
+                    String address = in.nextLine(); // takes inputted address
+                    Queue<Integer> addressIndex = test.searchAddress(address); // searches for address(es)
+                    if(addressIndex.size() == 0) // if no addresses found
                         {System.out.println("ERROR: Address not found");}
-                    else // else, returns contact number of address
-                        {System.out.println("Address - " + address + "'s information is in contact " + (addressIndex+1));}
+                    else if(addressIndex.size() == 1) // if one instance of address found                           
+                        {System.out.println("Address - " + address + "'s information is in contact " + (addressIndex.remove()+1));}
+                    else // if multiple instances of address found
+                    {
+                        System.out.println("There are "+addressIndex.size()+" occurences of the address " + address + " in the phonebook.");
+                        System.out.println("These occurences are in the following contact numbers:");
+                        int addressIndexSize = addressIndex.size();
+                        for(int i = 0; i < addressIndexSize; i++) // print each name from queue
+                            {System.out.println("Contact Number " + (addressIndex.remove()+1));}
+                    }
                     break;
                 case "6":
                 case "search phone number":
                     System.out.print("\nEnter the Phone Number to Search: ");
                     String phoneNumber = in.nextLine();
-                    int phoneIndex = test.searchPhoneNumber(phoneNumber); // searches for phone number
-                    if(phoneIndex == -1) // -1 means not found
+                    Queue<Integer> phoneIndex = test.searchPhoneNumber(phoneNumber); // searches for phone number
+                    if(phoneIndex.size() == 0) // if no phone number found
                         {System.out.println("ERROR: Phone Number not found");}
-                    else // else, returns contact number of phone number
-                        {System.out.println("Phone Number - " + phoneNumber + "'s information is in contact " + (phoneIndex+1));}
+                    else if (phoneIndex.size() == 1 ) // if one instance of phone number found
+                        {System.out.println("Phone Number - " + phoneNumber + "'s information is in contact " + (phoneIndex.remove()+1));}
+                    else // if multiple instance of phone number found
+                    {
+                        System.out.println("There are "+phoneIndex.size()+" occurences of the phone number " + phoneNumber + " in the phonebook.");
+                        System.out.println("These occurences are in the following contact numbers:");
+                        int phoneIndexSize = phoneIndex.size();
+                        for(int i = 0; i < phoneIndexSize; i++) // print each name from queue
+                            {System.out.println("Contact Number " + (phoneIndex.remove()+1));}
+                    }
                     break;
                 case "7":
                 case "edit first name":
