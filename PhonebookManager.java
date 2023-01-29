@@ -196,7 +196,6 @@ class PhonebookManager
     // make sure lastNodeTracker is always updated
     public void delete(int index)
     {
-        phonebookSize--; // reduces total size
 
         // if index out of range of total contacts
         if(index > phonebookSize-1 || index < 0) 
@@ -225,6 +224,7 @@ class PhonebookManager
             ListNode nodeTraveler = index(index-1); 
             nodeTraveler.next = nodeTraveler.next.next; // connect to node after next
         }
+        phonebookSize--; // reduces total size
     } // end of delete method
 
 

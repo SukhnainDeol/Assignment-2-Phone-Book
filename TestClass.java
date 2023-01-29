@@ -37,7 +37,7 @@ class TestClass
                         {System.out.println("\nERROR: Phonebook is Empty");}
                     else
                     {
-                        System.out.print("\nEnter Contact Number: ");
+                        System.out.print("\nEnter Contact Number to Delete: ");
                         int deleteIndex;
                         if(in.hasNextInt())
                         { // deletes deletetIndex value from phonebook
@@ -157,6 +157,7 @@ class TestClass
                 default:
                     System.out.println("\nERROR: Incorrect Input\n");
             } // end of switch/case
+            System.out.println(test.size());
 
             System.out.println("\nPress enter to continue");
             in.nextLine(); // makes it easier to view output before next command
