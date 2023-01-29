@@ -11,11 +11,8 @@
 // decide whether first and last name should be in.next or in.nextLine
 
 // to do
-    // test search methods
-    // modify methods
-    // delete method
+    // test delete method
         // delete fields and nodes??????
-    // review get method
     // double check everything
     // clean up
     // work on front end
@@ -28,7 +25,7 @@ class PhonebookManager
     private ListNode lastNodeTracker = null; // always at last node of linked list (use a while != null statement instead?)
     private int phonebookSize = 0; // used for .size method
 
-
+    // remove
     // constructor method
     public PhonebookManager(String firstName, String lastName, String address, String city, String phoneNumber)
     {
@@ -71,6 +68,9 @@ class PhonebookManager
                 else 
                 {
                     ListNode nodeTravelerTwo; // travels to index after new node to be added
+
+                    // change to index method
+
                     for(int i = 0; i < index-1; i++) // loops through all elements
                         {nodeTravelerOne = nodeTravelerOne.next; } // moves nodeTravelerOne to index before new node
 
@@ -153,95 +153,110 @@ class PhonebookManager
 
 
     
-    // next series of method modifiy a specific indexed node's specfic data
+    // series of mutator methods that modifiy a specific indexed node's data type
     public void modifyFirstName(int index, String newFirstName)
     {
-        ListNode modifiedData = index(index); // goes to node
-        modifiedData.firstName = newFirstName; // changes data
+        ListNode modifiedData = index(index); // goes to specified node
+        modifiedData.firstName = newFirstName; // changes firstName
     } // end of modifyFirstName mutator method
 
     public void modifyLastName(int index, String newLastName)
     {
-        ListNode modifiedData = index(index);
-        modifiedData.lastName = newLastName;
+        ListNode modifiedData = index(index); // goes to specified node
+        modifiedData.lastName = newLastName; // changes lastName
     } // end of modifyLastName mutator method
 
     public void modifyAddress(int index, String newAddress)
     {
-        ListNode modifiedData = index(index);
-        modifiedData.address = newAddress;
+        ListNode modifiedData = index(index); // goes to specified node
+        modifiedData.address = newAddress; // changes address
     } // end of modifyAddress mutator method
 
     public void modifyCity(int index, String newCity)
     {
-        ListNode modifiedData = index(index);
-        modifiedData.city = newCity;
+        ListNode modifiedData = index(index); // goes to specified node
+        modifiedData.city = newCity; // changes city
     } // end of modifyCity mutator method
 
     public void modifyPhoneNumber(int index, String newPhoneNumber)
     {
-        ListNode modifiedData = index(index);
-        modifiedData.phoneNumber = newPhoneNumber;
+        ListNode modifiedData = index(index); // goes to specified node
+        modifiedData.phoneNumber = newPhoneNumber; // changes phoneNumber
     } // end of modifyPhoneNumber mutator method
 
     
 
     // make sure firstEntry and lastNodeTracker will still work
         // reassign with index method?
+    // edge cases
+        // index is outside of range
+        // delete changes last node
+        // delete changes first node
+        // delete removes last remaining node
+    // make sure lastNodeTracker is always updated
     public void delete(int index)
     {
-        // index to node before deleted one connects to index after
-        if (index == 0 && index == phonebookSize-1) // if deleting only node
-        {
-            firstEntry = null; 
-            lastNodeTracker = null;
-        } 
-        else
-        {
-            if(index == 0) // if deleting first node
-            {firstEntry = index(index+1);} // firstEntry is now at index after deleted node
-            else if(index == phonebookSize-1) // if deleting last node
-            {
-                lastNodeTracker = index(index-1);
-                lastNodeTracker.next = null;
-            } // lastNodeTracker is now at index before deleted node
-            else // if deleting node in middle of list
-                {index(index-1).next = index(index+1);} // index before deleted node connects to index after
-        }
-        
         phonebookSize--; // reduces total size
+
+        // if index out of range of total contacts
+        if(index > phonebookSize-1 || index < 0) 
+        {
+            System.out.println("ERROR: Contact Number out of range of total contact number of " + phonebookSize);
+            phonebookSize++; // add back size since its an error
+        } 
+        else if(phonebookSize == 1) // if deleting last node left
+        {   // all trackers reverted to null
+            firstEntry = null;
+            lastNodeTracker = null;
+        }
+        else if(index == 0) // if deleting first node
+        {   // first entry goes to next node
+            firstEntry = firstEntry.next;
+        }
+        else if(index == phonebookSize-1) // if deleting last node
+        {
+            lastNodeTracker = firstEntry; // start from beginning
+            // move to 2nd to last node
+            lastNodeTracker = index(phonebookSize-2);
+            lastNodeTracker.next = null; // null last node
+        }
+        else // else if deleting in middle
+        {   // move to index before deleted node
+            ListNode nodeTraveler = index(index-1); 
+            nodeTraveler.next = nodeTraveler.next.next; // connect to node after next
+        }
     } // end of delete method
 
 
- 
+     // series of accessor methods that retreive data from a specific indexed node
     public String getFirstName(int index, String data)
     {
-        ListNode get = index(index);
-        return get.firstName;
+        ListNode get = index(index); // goes to specified node
+        return get.firstName; // return node's firstName
     } // end of getFirstName accessor method
     
     public String getLastName(int index, String data)
     {
-        ListNode get = index(index);
-        return get.lastName;
+        ListNode get = index(index); // goes to specified node
+        return get.lastName; // return node's lastName
     } // end of getLastName accessor method
 
     public String getAddress(int index, String data)
     {
-        ListNode get = index(index);
-        return get.address;
+        ListNode get = index(index); // goes to specified node
+        return get.address; // return node's address
     } // end of getAddress accessor method
 
     public String getCity(int index, String data)
     {
-        ListNode get = index(index);
-        return get.city;
+        ListNode get = index(index); // goes to specified node
+        return get.city; // return node's city 
     } // end of getCity accessor method
 
     public String getPhoneNumber(int index, String data)
     {
-        ListNode get = index(index);
-        return get.phoneNumber;
+        ListNode get = index(index); // goes to specified node
+        return get.phoneNumber; // return node's phoneNumber
     } // end of getPhoneNumber accessor method
 
 
