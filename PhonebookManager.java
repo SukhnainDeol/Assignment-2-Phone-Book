@@ -3,16 +3,21 @@
 // Date 01/24/2023
 // Assignment: Assignment 2: Phone Book
 
-// Purpose:
+// Purpose: Create a phonebook class with the use of the listnode class in order
+// to keep track of entries with sets of names, addresses, cities, and phone numbers
+// and to be to print out the entries in a clean, readable manner.
 
 // if newNode not working, check new overloaded constructor
 // decide whether first and last name should be in.next or in.nextLine
 
 // to do
-    // test everything
+    // test newNode, delete, Search
     // clean up
     // move front end if statements to methods
-    // make generic methods into one method?
+    // make generic methods into one method? (search, modify, get)
+    
+    // deal with extra spaces after a word for node data
+        // use .replace(" ", "") in search methods
 
 import java.util.*;
 
@@ -210,7 +215,7 @@ class PhonebookManager
         // traverse linked list 
         for(int i = 0; i < phonebookSize; i++)
         {   // if city in node equals name in parameter
-            if(nodeTraveler.address.equals(city))
+            if(nodeTraveler.city.equals(city))
                 {foundCities.add(i);} // add city node index
             nodeTraveler = nodeTraveler.next; // moves to next node
         }
