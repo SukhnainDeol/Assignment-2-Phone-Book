@@ -6,16 +6,13 @@
 // Purpose:
 
 // if newNode not working, check new overloaded constructor
-// use iterator<E> and list<E> interfaces?
-// rename index method to atIndex
 // decide whether first and last name should be in.next or in.nextLine
 
 // to do
-    // test delete method
-        // delete fields and nodes??????
-    // double check everything
+    // test everything
     // clean up
-    // work on front end
+    // move front end if statements to methods
+    // make generic methods into one method?
 
 import java.util.*;
 
@@ -25,8 +22,8 @@ class PhonebookManager
     private ListNode lastNodeTracker = null; // always at last node of linked list (use a while != null statement instead?)
     private int phonebookSize = 0; // used for .size method
 
-    // remove
-    // constructor method
+
+    // constructor method that initalizes new node's values
     public PhonebookManager(String firstName, String lastName, String address, String city, String phoneNumber)
     {
         this.firstEntry = new ListNode(firstName, lastName, address, city, phoneNumber); // creates first node
@@ -47,7 +44,7 @@ class PhonebookManager
     public void newNode(String firstName, String lastName, String address, String city, String phoneNumber, int index) throws IndexOutOfBoundsException
     {
         // if there isnt a node yet
-        if(firstEntry == null)
+        if(firstEntry == null && index <= phonebookSize && index >= 0)
         {
             // make new node
             firstEntry = new ListNode(firstName, lastName, address, city, phoneNumber);
@@ -84,107 +81,10 @@ class PhonebookManager
                 }
                 phonebookSize++; // increment total linked list size
             }
-            else
-                {System.out.println("ERROR: Index Not Within Than Phonebook Size of "+ phonebookSize);}
         }
     } // end of newNode method
-
-
-
-    // searches linked list to find a nodes with given address
-    public Queue<Integer> searchName(String name)
-    {
-        ListNode nodeTraveler = firstEntry;
-        Queue<Integer> foundNames = new LinkedList<>();
-        // traverse linked list 
-        for(int i = 0; i < phonebookSize; i++)
-        {   // if name in node equals name in parameter
-            if((nodeTraveler.firstName+" "+nodeTraveler.lastName).equals(name))
-                {foundNames.add(i);} // adds name
-            nodeTraveler = nodeTraveler.next; // moves to next node
-        }
-        return foundNames; // return found names 
-    } // end of indexName method
-
-
-
-    // searches linked list to find a nodes with given address
-    public Queue<Integer> searchAddress(String address)
-    {
-        ListNode nodeTraveler = firstEntry;
-        Queue<Integer> foundAddresses = new LinkedList<>();
-        // traverse linked list 
-        for(int i = 0; i < phonebookSize; i++)
-        {   // if address in node equals name in parameter
-            if(nodeTraveler.address.equals(address))
-                {foundAddresses.add(i);} // add address
-            nodeTraveler = nodeTraveler.next; // moves to next node
-        }
-        return foundAddresses; // return found addresses
-    } // end of indexAddress method
-
-
-
-    // searches linked list to find a node with given address
-    public Queue<Integer> searchPhoneNumber(String phoneNumber)
-    {
-        ListNode nodeTraveler = firstEntry;
-        Queue<Integer> foundPhoneNumbers = new LinkedList<>();
-        // traverse linked list 
-        for(int i = 0; i < phonebookSize; i++)
-        {   // if phoneNumber in node equals name in parameter
-            if(nodeTraveler.phoneNumber.equals(phoneNumber))
-                {foundPhoneNumbers.add(i);} // add phone number
-            nodeTraveler = nodeTraveler.next; // moves to next node
-        }
-        return foundPhoneNumbers; // return found phone numbers
-    } // end of indexPhoneNumber method
-
-
-
-    // returns a listnode at a certain index in phonebook
-    public ListNode index(int index)
-    {
-        ListNode nodeTraveler = firstEntry;
-        for(int i = 0; i < index; i++)
-            {nodeTraveler = nodeTraveler.next;}
-        return nodeTraveler;
-    } // end of index method
-
-
     
-    // series of mutator methods that modifiy a specific indexed node's data type
-    public void modifyFirstName(int index, String newFirstName)
-    {
-        ListNode modifiedData = index(index); // goes to specified node
-        modifiedData.firstName = newFirstName; // changes firstName
-    } // end of modifyFirstName mutator method
 
-    public void modifyLastName(int index, String newLastName)
-    {
-        ListNode modifiedData = index(index); // goes to specified node
-        modifiedData.lastName = newLastName; // changes lastName
-    } // end of modifyLastName mutator method
-
-    public void modifyAddress(int index, String newAddress)
-    {
-        ListNode modifiedData = index(index); // goes to specified node
-        modifiedData.address = newAddress; // changes address
-    } // end of modifyAddress mutator method
-
-    public void modifyCity(int index, String newCity)
-    {
-        ListNode modifiedData = index(index); // goes to specified node
-        modifiedData.city = newCity; // changes city
-    } // end of modifyCity mutator method
-
-    public void modifyPhoneNumber(int index, String newPhoneNumber)
-    {
-        ListNode modifiedData = index(index); // goes to specified node
-        modifiedData.phoneNumber = newPhoneNumber; // changes phoneNumber
-    } // end of modifyPhoneNumber mutator method
-
-    
 
     // make sure firstEntry and lastNodeTracker will still work
         // reassign with index method?
@@ -228,7 +128,148 @@ class PhonebookManager
     } // end of delete method
 
 
-     // series of accessor methods that retreive data from a specific indexed node
+
+    // returns total number of nodes in phonebook
+    public int size()
+    {
+        return phonebookSize;
+    } // end of size method
+
+
+    // returns a listnode at a certain index in phonebook
+    public ListNode index(int index)
+    {
+        ListNode nodeTraveler = firstEntry;
+        for(int i = 0; i < index; i++)
+            {nodeTraveler = nodeTraveler.next;}
+        return nodeTraveler;
+    } // end of index method
+        
+
+
+    // returns a formatted string containing information from the phonebook
+    public String toString()
+    {
+        ListNode nodeTraveler = firstEntry;
+        String toString = "";
+        for (int i = 0; i<phonebookSize; i++)
+        {
+            toString += "Contact " + (i+1); 
+            toString += "\nName: " + nodeTraveler.firstName + " " + nodeTraveler.lastName;
+            toString += "\nAddress: " + nodeTraveler.address;
+            toString += "\nCity: " + nodeTraveler.city;
+            toString += "\nPhone Number: " + nodeTraveler.phoneNumber + "\n\n";
+            nodeTraveler = nodeTraveler.next;
+            
+        }
+
+        return toString;
+    } // end of toString method
+
+
+
+    // searches linked list to find a nodes with given address
+    public Queue<Integer> searchName(String name)
+    {
+        ListNode nodeTraveler = firstEntry;
+        Queue<Integer> foundNames = new LinkedList<>();
+        // traverse linked list 
+        for(int i = 0; i < phonebookSize; i++)
+        {   // if name in node equals name in parameter
+            if((nodeTraveler.firstName+" "+nodeTraveler.lastName).equals(name))
+                {foundNames.add(i);} // adds name node index
+            nodeTraveler = nodeTraveler.next; // moves to next node
+        }
+        return foundNames; // return found names 
+    } // end of indexName method
+
+
+
+    // searches linked list to find a nodes with given address
+    public Queue<Integer> searchAddress(String address)
+    {
+        ListNode nodeTraveler = firstEntry;
+        Queue<Integer> foundAddresses = new LinkedList<>();
+        // traverse linked list 
+        for(int i = 0; i < phonebookSize; i++)
+        {   // if address in node equals name in parameter
+            if(nodeTraveler.address.equals(address))
+                {foundAddresses.add(i);} // add address node index
+            nodeTraveler = nodeTraveler.next; // moves to next node
+        }
+        return foundAddresses; // return found addresses
+    } // end of indexAddress method
+
+
+
+    // searches linked list to find a nodes with given city
+    public Queue<Integer> searchCity(String city)
+    {
+        ListNode nodeTraveler = firstEntry;
+        Queue<Integer> foundCities = new LinkedList<>();
+        // traverse linked list 
+        for(int i = 0; i < phonebookSize; i++)
+        {   // if city in node equals name in parameter
+            if(nodeTraveler.address.equals(city))
+                {foundCities.add(i);} // add city node index
+            nodeTraveler = nodeTraveler.next; // moves to next node
+        }
+        return foundCities; // return found addresses
+    } // end of indexAddress method
+
+
+
+    // searches linked list to find a node with given address
+    public Queue<Integer> searchPhoneNumber(String phoneNumber)
+    {
+        ListNode nodeTraveler = firstEntry;
+        Queue<Integer> foundPhoneNumbers = new LinkedList<>();
+        // traverse linked list 
+        for(int i = 0; i < phonebookSize; i++)
+        {   // if phoneNumber in node equals name in parameter
+            if(nodeTraveler.phoneNumber.equals(phoneNumber))
+                {foundPhoneNumbers.add(i);} // add phone number
+            nodeTraveler = nodeTraveler.next; // moves to next node
+        }
+        return foundPhoneNumbers; // return found phone numbers
+    } // end of indexPhoneNumber method
+
+
+
+    // series of mutator methods that modifiy a specific indexed node's data type
+    public void modifyFirstName(int index, String newFirstName)
+    {
+        ListNode modifiedData = index(index); // goes to specified node
+        modifiedData.firstName = newFirstName; // changes firstName
+    } // end of modifyFirstName mutator method
+
+    public void modifyLastName(int index, String newLastName)
+    {
+        ListNode modifiedData = index(index); // goes to specified node
+        modifiedData.lastName = newLastName; // changes lastName
+    } // end of modifyLastName mutator method
+
+    public void modifyAddress(int index, String newAddress)
+    {
+        ListNode modifiedData = index(index); // goes to specified node
+        modifiedData.address = newAddress; // changes address
+    } // end of modifyAddress mutator method
+
+    public void modifyCity(int index, String newCity)
+    {
+        ListNode modifiedData = index(index); // goes to specified node
+        modifiedData.city = newCity; // changes city
+    } // end of modifyCity mutator method
+
+    public void modifyPhoneNumber(int index, String newPhoneNumber)
+    {
+        ListNode modifiedData = index(index); // goes to specified node
+        modifiedData.phoneNumber = newPhoneNumber; // changes phoneNumber
+    } // end of modifyPhoneNumber mutator method
+
+
+
+    // series of accessor methods that retreive data from a specific indexed node
     public String getFirstName(int index, String data)
     {
         ListNode get = index(index); // goes to specified node
@@ -258,33 +299,4 @@ class PhonebookManager
         ListNode get = index(index); // goes to specified node
         return get.phoneNumber; // return node's phoneNumber
     } // end of getPhoneNumber accessor method
-
-
-
-    // returns total number of nodes in phonebook
-    public int size()
-    {
-        return phonebookSize;
-    } // end of size method
-
-
-
-    // returns a formatted string containing information from the phonebook
-    public String toString()
-    {
-        ListNode nodeTraveler = firstEntry;
-        String toString = "";
-        for (int i = 0; i<phonebookSize; i++)
-        {
-            toString += "Contact " + (i+1); 
-            toString += "\nName: " + nodeTraveler.firstName + " " + nodeTraveler.lastName;
-            toString += "\nAddress: " + nodeTraveler.address;
-            toString += "\nCity: " + nodeTraveler.city;
-            toString += "\nPhone Number: " + nodeTraveler.phoneNumber + "\n\n";
-            nodeTraveler = nodeTraveler.next;
-            
-        }
-
-        return toString;
-    } // end of toString method
 } // end of PhonebookManager class

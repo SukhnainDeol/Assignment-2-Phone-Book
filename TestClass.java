@@ -23,12 +23,24 @@ class TestClass
             printMenu();
             String command = in.nextLine();
             
+            // if phonebook empty, ask them to created a new entry before doing anything else
+            if(test.size() == 0 && !(command.equals("1") || command.toLowerCase().equals("add entry")))
+            {   // if quitting, break out of nest if loop
+                if(command.equals("0") || command.toLowerCase().equals("quit"))
+                    {break;}
+                System.out.println("\nPhonebook is empty, please create a a new entry first");
+                System.out.println("\nPress enter to contiue");
+                in.nextLine(); // waits for user to press enter 
+                System.out.println("\n");
+                continue; // repeats loop from beginning
+            }
+            
             switch(command.toLowerCase())
             {
                 case "1":
                 case "add entry":
                     // turn into method
-                    String[] newEntry = newEntryInput(in);
+                    String[] newEntry = newEntryInput(in, test.size());
                     test.newNode(newEntry[0], newEntry[1], newEntry[2], newEntry[3], newEntry[4], Integer.parseInt(newEntry[5])-1);
                     break;
                 case "2":
@@ -110,54 +122,141 @@ class TestClass
                     }
                     break;
                 case "7":
-                case "edit first name":
-                        // make sure
-                    System.out.println("Which contact number's name would you like to edit?: ");
-                    if (in.hasNextInt())
+                case "search city":
+                    System.out.print("\nEnter the City to Search: ");
+                    String city = in.nextLine();
+                    Queue<Integer> cityIndex = test.searchAddress(city); // searches for phone number
+                    if(cityIndex.size() == 0) // if no phone number found
+                        {System.out.println("ERROR: City not found");}
+                    else if (cityIndex.size() == 1 ) // if one instance of phone number found
+                        {System.out.println("City - " + city + "'s information is in contact " + (cityIndex.remove()+1));}
+                    else // if multiple instance of phone number found
                     {
-                        int editNameIndex = in.nextInt();
-                        System.out.println("Enter new first name: ");
-                        String newName = in.nextLine();
-                        test.modifyFirstName(editNameIndex, newName);
-                        System.out.println("Enter new last name: ");
-                        String newLastName = in.nextLine();
-                        test.modifyLastName(editNameIndex, newLastName);
+                        System.out.println("There are "+cityIndex.size()+" occurences of the phone number " + city + " in the phonebook.");
+                        System.out.println("These occurences are in the following contact numbers:");
+                        int cityIndexSize = cityIndex.size();
+                        for(int i = 0; i < cityIndexSize; i++) // print each name from queue
+                            {System.out.println("Contact Number " + (cityIndex.remove()+1));}
                     }
                     break;
                 case "8":
+                case "edit name":
+                        // make sure
+                    System.out.print("Which contact number's Name would you like to edit?: ");
+                    if (in.hasNextInt())
+                    {
+                        int editNameIndex = in.nextInt();
+                        // if index is a real contact number
+                        if(editNameIndex > 0 && editNameIndex <= test.size())
+                        {
+                            editNameIndex--; // index -1 to match index start 0 (shown as 1 to user)
+                            in.nextLine();
+                            System.out.println("Enter new first name: ");
+                            String newFirstName = in.nextLine();
+                            test.modifyFirstName(editNameIndex, newFirstName);
+                            System.out.print("Enter new last name: ");
+                            String newLastName = in.nextLine();
+                            test.modifyLastName(editNameIndex, newLastName);
+                        }
+                        else
+                        {
+                            System.out.println("ERROR: Number is not within range contacts");
+                            in.nextLine();
+                        }
+                    }
+                    else
+                    {
+                        System.out.println("ERROR: Input is not a Whole Number");
+                        in.nextLine();
+                    }
+                    break;
+                case "9":
                 case "edit address":
-                    System.out.println("Which contact number's address would you like to edit?: ");
+                    System.out.print("Which contact number's Address would you like to edit?: ");
                     if(in.hasNextInt())
                     {
                         int editAddressIndex = in.nextInt();
-                        System.out.println("Enter new address: ");
-                        String newAddress = in.nextLine();
-                        test.modifyAddress(editAddressIndex, newAddress);
+                        if(editAddressIndex > 0 && editAddressIndex <= test.size())
+                        {
+                            editAddressIndex--; // index -1 to match index start 0 (shown as 1 to user)
+                            in.nextLine();
+                            System.out.print("Enter new address: ");
+                            String newAddress = in.nextLine();
+                            test.modifyAddress(editAddressIndex-1, newAddress);
+                        }
+                        else
+                        {
+                            System.out.println("ERROR: Number is not within range contacts");
+                            in.nextLine();
+                        }
                     }
                     else
-                        {System.out.println("ERROR: Input is not a Number");}
+                    {
+                        System.out.println("ERROR: Input is not a Whole Number");
+                        in.nextLine();
+                    }
                     break;
-                case "9":
+                case "10":
                 case "edit phone number":
-                    System.out.println("Which contact number's phone number would you like to edit?: ");
+                    System.out.print("Which contact number's Phone Number would you like to edit?: ");
                     if(in.hasNextInt())
                     {
                         int editPhoneIndex = in.nextInt();
-                        System.out.println("Enter new phone number: ");
-                        String newPhoneNumber = in.nextLine();
-                        test.modifyPhoneNumber(editPhoneIndex, newPhoneNumber);
+                        // if index is a real contact number
+                        if(editPhoneIndex > 0 && editPhoneIndex <= test.size())
+                        {
+                            editPhoneIndex--; // index -1 to match index start 0 (shown as 1 to user)
+                            in.nextLine();
+                            System.out.print("Enter new phone number: ");
+                            String newPhoneNumber = in.nextLine();
+                            test.modifyPhoneNumber(editPhoneIndex, newPhoneNumber);
+                        }
+                        else
+                        {
+                            System.out.println("ERROR: Number is not within range contacts");
+                            in.nextLine();
+                        }
                     }
                     else
-                        {System.out.println("ERROR: Input is not a Number");}
+                    {
+                        System.out.println("ERROR: Input is not a Whole Number");
+                        in.nextLine();
+                    }
+                    break;
+                case "11":
+                case "edit city":
+                    System.out.print("Which contact number's City would you like to edit?: ");
+                    if(in.hasNextInt())
+                    {
+                        int editCityIndex = in.nextInt();
+                        // if index is a real contact number
+                        if(editCityIndex > 0 && editCityIndex <= test.size())
+                        {
+                            editCityIndex--; // index -1 to match index start 0 (shown as 1 to user)
+                            in.nextLine();
+                            System.out.print("Enter new city: ");
+                            String newCity = in.nextLine();
+                            test.modifyCity(editCityIndex, newCity);
+                        }
+                        else
+                        {
+                            System.out.println("ERROR: Number is not within range contacts");
+                            in.nextLine();
+                        }
+                    }
+                    else
+                    {
+                        System.out.println("ERROR: Input is not a Whole Number");
+                        in.nextLine();
+                    }
                     break;
                 case "0":
                 case "quit":
-                    inUse = false;
+                    inUse = false; // ends while loop
                     break;
                 default:
                     System.out.println("\nERROR: Incorrect Input\n");
             } // end of switch/case
-            System.out.println(test.size());
 
             System.out.println("\nPress enter to continue");
             in.nextLine(); // makes it easier to view output before next command
@@ -167,6 +266,7 @@ class TestClass
 
 
 
+    // displays to the user what commands they have access to
     public static void printMenu()
     {
         System.out.println("Please choose one of the following menu options:");
@@ -176,16 +276,21 @@ class TestClass
         System.out.println("4 - Search Name ");
         System.out.println("5 - Search Address ");
         System.out.println("6 - Search Phone Number");
-        System.out.println("7 - Edit Name");
-        System.out.println("8 - Edit Address");
-        System.out.println("9 - Edit Phone Number");
+        System.out.println("7 - Search City");
+        System.out.println("8 - Edit Name");
+        System.out.println("9 - Edit Address");
+        System.out.println("10 - Edit Phone Number");
+        System.out.println("11 - Edit City");
         System.out.println("0 - Quit");
+
         System.out.print("\nCommand: ");
     } // end of printMenu method
 
 
 
-    public static String[] newEntryInput(Scanner in) 
+    // asks user to input each field of the node (excluding next node)
+    // as well as the contact number the new node will be shown as
+    public static String[] newEntryInput(Scanner in, int phonebookSize) 
     {
         boolean correctIndex = false;
         String[] newEntry = new String[6]; // array to hold new entry 
@@ -193,25 +298,47 @@ class TestClass
         // get all info for new entry then use newNode method
         System.out.print("\nEnter First Name: ");
         newEntry[0] = in.next();
-        in.nextLine(); // incase multi word input, clear line for next input
+        in.nextLine(); // incase multi word input, clear line for next 
+        
         System.out.print("Enter Last Name: ");
         newEntry[1] = in.next();
         in.nextLine(); // incase multi word input, clear line for next input
+
         System.out.print("Enter Address: ");
         newEntry[2] = in.nextLine();
+        // if value is blank or whitespace it will be entered as "N/A"
+        if(newEntry[2].replace(" ", "").equals(""))
+            {newEntry[2] = "N/A";}
+
         System.out.print("Enter City: ");
         newEntry[3] = in.nextLine();
+        // if value is blank or whitespace it will be entered as "N/A"
+        if(newEntry[3].replace(" ", "").equals(""))
+            {newEntry[3] = "N/A";}
+
         System.out.print("Enter Phone Number: ");
         newEntry[4] = in.nextLine();
+        // if value is blank or whitespace it will be entered as "N/A"
+        if(newEntry[4].replace(" ", "").equals(""))
+            {newEntry[4] = "N/A";}
+
         // loop until valid contact number given
         while(correctIndex == false)
         { 
-            System.out.print("Contact Number of New Entry: ");
+            System.out.print("Contact Number of New Entry (currently at " + phonebookSize + " contacts): ");
             if(in.hasNextInt()) // if correct input, end loop 
+            {
+                newEntry[5] = in.next();
+                int contactNumber = Integer.parseInt(newEntry[5]);
+                // if new entry is a contact number in phonebook
+                if(contactNumber <= phonebookSize+1 && contactNumber > 0)
+                    {correctIndex = true;}
+                else
                 {
-                    newEntry[5] = in.next();
-                    correctIndex = true;
-                }
+                    System.out.println("\nERROR: Index Not Within Than Phonebook Size of "+ phonebookSize);
+                    System.out.println("Please choose a number through the range of 1 to " + (phonebookSize+1)+"\n");
+                }  
+            }
             else // print error message each failure
                 {System.out.println("ERROR: Please Give A Numerical Input");}
             in.nextLine(); // incase multi word input, clear line for next input
@@ -220,6 +347,3 @@ class TestClass
         return newEntry;
     } // end of newEntryInput method
 } // end of TestClass class
-
-
-
