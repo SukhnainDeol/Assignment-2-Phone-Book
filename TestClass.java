@@ -3,9 +3,12 @@
 // Date 01/24/2023
 // Assignment: Assignment 2: Phone Book
 
-// Purpose:
-// to do:
-    // add choice to add entry at specific index
+// Purpose: Create an interface for users to access, manipulate, add and remove
+// data from a phonebook
+
+
+
+
 
 import java.util.*;
 
@@ -93,7 +96,7 @@ class TestClass
                     if(addressIndex.size() == 0) // if no addresses found
                         {System.out.println("ERROR: Address not found");}
                     else if(addressIndex.size() == 1) // if one instance of address found                           
-                        {System.out.println("Address - " + address + "'s information is in contact " + (addressIndex.remove()+1));}
+                        {System.out.println("The person with the address" + address + " has their information in contact " + (addressIndex.remove()+1));}
                     else // if multiple instances of address found
                     {
                         System.out.println("There are "+addressIndex.size()+" occurences of the address " + address + " in the phonebook.");
@@ -104,6 +107,24 @@ class TestClass
                     }
                     break;
                 case "6":
+                case "search city":
+                    System.out.print("\nEnter the City to Search: ");
+                    String city = in.nextLine();
+                    Queue<Integer> cityIndex = test.searchCity(city); // searches for phone number
+                    if(cityIndex.size() == 0) // if no phone number found
+                        {System.out.println("ERROR: City not found");}
+                    else if (cityIndex.size() == 1 ) // if one instance of phone number found
+                        {System.out.println("The person in the city " + city + " has their information in contact " + (cityIndex.remove()+1));}
+                    else // if multiple instance of phone number found
+                    {
+                        System.out.println("There are "+cityIndex.size()+" occurences of the city " + city + " in the phonebook.");
+                        System.out.println("These occurences are in the following contact numbers:");
+                        int cityIndexSize = cityIndex.size();
+                        for(int i = 0; i < cityIndexSize; i++) // print each name from queue
+                            {System.out.println("Contact Number " + (cityIndex.remove()+1));}
+                    }
+                    break;
+                case "7":
                 case "search phone number":
                     System.out.print("\nEnter the Phone Number to Search: ");
                     String phoneNumber = in.nextLine();
@@ -111,7 +132,7 @@ class TestClass
                     if(phoneIndex.size() == 0) // if no phone number found
                         {System.out.println("ERROR: Phone Number not found");}
                     else if (phoneIndex.size() == 1 ) // if one instance of phone number found
-                        {System.out.println("Phone Number - " + phoneNumber + "'s information is in contact " + (phoneIndex.remove()+1));}
+                        {System.out.println("The person with the phone number " + phoneNumber + " has their information in contact " + (phoneIndex.remove()+1));}
                     else // if multiple instance of phone number found
                     {
                         System.out.println("There are "+phoneIndex.size()+" occurences of the phone number " + phoneNumber + " in the phonebook.");
@@ -119,24 +140,6 @@ class TestClass
                         int phoneIndexSize = phoneIndex.size();
                         for(int i = 0; i < phoneIndexSize; i++) // print each name from queue
                             {System.out.println("Contact Number " + (phoneIndex.remove()+1));}
-                    }
-                    break;
-                case "7":
-                case "search city":
-                    System.out.print("\nEnter the City to Search: ");
-                    String city = in.nextLine();
-                    Queue<Integer> cityIndex = test.searchAddress(city); // searches for phone number
-                    if(cityIndex.size() == 0) // if no phone number found
-                        {System.out.println("ERROR: City not found");}
-                    else if (cityIndex.size() == 1 ) // if one instance of phone number found
-                        {System.out.println("City - " + city + "'s information is in contact " + (cityIndex.remove()+1));}
-                    else // if multiple instance of phone number found
-                    {
-                        System.out.println("There are "+cityIndex.size()+" occurences of the phone number " + city + " in the phonebook.");
-                        System.out.println("These occurences are in the following contact numbers:");
-                        int cityIndexSize = cityIndex.size();
-                        for(int i = 0; i < cityIndexSize; i++) // print each name from queue
-                            {System.out.println("Contact Number " + (cityIndex.remove()+1));}
                     }
                     break;
                 case "8":
@@ -182,7 +185,7 @@ class TestClass
                             in.nextLine();
                             System.out.print("Enter new address: ");
                             String newAddress = in.nextLine();
-                            test.modifyAddress(editAddressIndex-1, newAddress);
+                            test.modifyAddress(editAddressIndex, newAddress);
                         }
                         else
                         {
@@ -197,19 +200,19 @@ class TestClass
                     }
                     break;
                 case "10":
-                case "edit phone number":
-                    System.out.print("Which contact number's Phone Number would you like to edit?: ");
+                case "edit city":
+                    System.out.print("Which contact number's City would you like to edit?: ");
                     if(in.hasNextInt())
                     {
-                        int editPhoneIndex = in.nextInt();
+                        int editCityIndex = in.nextInt();
                         // if index is a real contact number
-                        if(editPhoneIndex > 0 && editPhoneIndex <= test.size())
+                        if(editCityIndex > 0 && editCityIndex <= test.size())
                         {
-                            editPhoneIndex--; // index -1 to match index start 0 (shown as 1 to user)
+                            editCityIndex--; // index -1 to match index start 0 (shown as 1 to user)
                             in.nextLine();
-                            System.out.print("Enter new phone number: ");
-                            String newPhoneNumber = in.nextLine();
-                            test.modifyPhoneNumber(editPhoneIndex, newPhoneNumber);
+                            System.out.print("Enter new city: ");
+                            String newCity = in.nextLine();
+                            test.modifyCity(editCityIndex, newCity);
                         }
                         else
                         {
@@ -224,19 +227,19 @@ class TestClass
                     }
                     break;
                 case "11":
-                case "edit city":
-                    System.out.print("Which contact number's City would you like to edit?: ");
+                case "edit phone number":
+                    System.out.print("Which contact number's Phone Number would you like to edit?: ");
                     if(in.hasNextInt())
                     {
-                        int editCityIndex = in.nextInt();
+                        int editPhoneIndex = in.nextInt();
                         // if index is a real contact number
-                        if(editCityIndex > 0 && editCityIndex <= test.size())
+                        if(editPhoneIndex > 0 && editPhoneIndex <= test.size())
                         {
-                            editCityIndex--; // index -1 to match index start 0 (shown as 1 to user)
+                            editPhoneIndex--; // index -1 to match index start 0 (shown as 1 to user)
                             in.nextLine();
-                            System.out.print("Enter new city: ");
-                            String newCity = in.nextLine();
-                            test.modifyCity(editCityIndex, newCity);
+                            System.out.print("Enter new phone number: ");
+                            String newPhoneNumber = in.nextLine();
+                            test.modifyPhoneNumber(editPhoneIndex, newPhoneNumber);
                         }
                         else
                         {
@@ -275,12 +278,12 @@ class TestClass
         System.out.println("3 - View Phonebook");
         System.out.println("4 - Search Name ");
         System.out.println("5 - Search Address ");
-        System.out.println("6 - Search Phone Number");
-        System.out.println("7 - Search City");
+        System.out.println("6 - Search City");
+        System.out.println("7 - Search Phone Number");
         System.out.println("8 - Edit Name");
         System.out.println("9 - Edit Address");
-        System.out.println("10 - Edit Phone Number");
-        System.out.println("11 - Edit City");
+        System.out.println("10 - Edit City");
+        System.out.println("11 - Edit Phone Number");
         System.out.println("0 - Quit");
 
         System.out.print("\nCommand: ");
