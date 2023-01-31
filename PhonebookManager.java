@@ -18,6 +18,7 @@
     
     // deal with extra spaces after a word for node data
         // use .replace(" ", "") in search methods
+    // add isEmpty method
 
 import java.util.*;
 
@@ -25,7 +26,7 @@ class PhonebookManager
 {
     private ListNode firstEntry = null; // always at first node of linked list
     private ListNode lastNodeTracker = null; // always at last node of linked list (use a while != null statement instead?)
-    private int phonebookSize = 0; // used for .size method
+    private int phonebookSize = 0; // used for .size() method
 
 
     // constructor method that initalizes new node's values
@@ -117,7 +118,7 @@ class PhonebookManager
         {   // first entry goes to next node
             firstEntry = firstEntry.next;
         }
-        else if(index == phonebookSize-1) // if deleting last node
+        else if(index == phonebookSize-1) // if deleting end node 
         {
             lastNodeTracker = firstEntry; // start from beginning
             // move to 2nd to last node
@@ -125,8 +126,8 @@ class PhonebookManager
             lastNodeTracker.next = null; // null last node
         }
         else // else if deleting in middle
-        {   // move to index before deleted node
-            ListNode nodeTraveler = index(index-1); 
+        {   
+            ListNode nodeTraveler = index(index-1); // move to index before deleted node
             nodeTraveler.next = nodeTraveler.next.next; // connect to node after next
         }
         phonebookSize--; // reduces total size
@@ -142,7 +143,7 @@ class PhonebookManager
 
 
     // returns a listnode at a certain index in phonebook
-    public ListNode index(int index)
+    public ListNode index(int index) throws NullPointerException
     {
         ListNode nodeTraveler = firstEntry;
         for(int i = 0; i < index; i++)

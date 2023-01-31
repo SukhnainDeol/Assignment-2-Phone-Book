@@ -201,6 +201,8 @@ class TestClass
                     break;
                 case "10":
                 case "edit city":
+                editNode(in, "city", test);
+                    /* 
                     System.out.print("Which contact number's City would you like to edit?: ");
                     if(in.hasNextInt())
                     {
@@ -225,6 +227,7 @@ class TestClass
                         System.out.println("ERROR: Input is not a Whole Number");
                         in.nextLine();
                     }
+                    */
                     break;
                 case "11":
                 case "edit phone number":
@@ -256,9 +259,10 @@ class TestClass
                 case "0":
                 case "quit":
                     inUse = false; // ends while loop
-                    break;
+                    continue; // continue instead of break in order to instantly end loop
                 default:
                     System.out.println("\nERROR: Incorrect Input\n");
+                    break;
             } // end of switch/case
 
             System.out.println("\nPress enter to continue");
@@ -349,4 +353,63 @@ class TestClass
         
         return newEntry;
     } // end of newEntryInput method
+
+
+
+    public static void editNode(Scanner in, String nodeData, PhonebookManager test)
+    {
+        String newData = "";
+        System.out.print("Which contact number's "+nodeData+" would you like to edit?: ");
+        if(in.hasNextInt())
+        {
+            int editIndex = in.nextInt();
+            // if index is a real contact number
+            if(editIndex > 0 && editIndex <= test.size())
+            {
+                editIndex--; // index -1 to match index start 0 (shown as 1 to user)
+                in.nextLine();
+                // if not a changing name because it needs first and last name input
+                if(!nodeData.equalsIgnoreCase("name"))
+                {
+                    System.out.print("Enter new "+nodeData+": ");
+                    newData = in.nextLine();
+                }
+                
+                switch(nodeData.toLowerCase())
+                {
+                    case "name":
+                        System.out.print("Enter new first name: ");
+                        newData = in.nextLine();
+                        test.modifyFirstName(editIndex, newData); 
+
+                        System.out.print("Enter new last name: ");
+                        newData = in.nextLine();
+                        test.modifyLastName(editIndex, newData);
+
+                        break;
+                    case "address":
+                        test.modifyAddress(editIndex, newData);
+                        break;
+                    case "city":
+                        test.modifyCity(editIndex, newData);
+                        break;
+                    case "phone number":
+                        test.modifyPhoneNumber(editIndex, newData);
+                        break;
+                    default: // tells user they used an invalid parameter otherwise
+                        throw new IllegalArgumentException("Not a Valid NodeData Parameter");
+                }
+            }
+            else
+            {
+                System.out.println("ERROR: Number is not within range contacts");
+                in.nextLine();
+            }
+        }
+        else
+        {
+            System.out.println("ERROR: Input is not a Whole Number");
+            in.nextLine();
+        }
+    }
 } // end of TestClass class
