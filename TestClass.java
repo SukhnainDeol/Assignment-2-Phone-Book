@@ -144,117 +144,19 @@ class TestClass
                     break;
                 case "8":
                 case "edit name":
-                        // make sure
-                    System.out.print("Which contact number's Name would you like to edit?: ");
-                    if (in.hasNextInt())
-                    {
-                        int editNameIndex = in.nextInt();
-                        // if index is a real contact number
-                        if(editNameIndex > 0 && editNameIndex <= test.size())
-                        {
-                            editNameIndex--; // index -1 to match index start 0 (shown as 1 to user)
-                            in.nextLine();
-                            System.out.println("Enter new first name: ");
-                            String newFirstName = in.nextLine();
-                            test.modifyFirstName(editNameIndex, newFirstName);
-                            System.out.print("Enter new last name: ");
-                            String newLastName = in.nextLine();
-                            test.modifyLastName(editNameIndex, newLastName);
-                        }
-                        else
-                        {
-                            System.out.println("ERROR: Number is not within range contacts");
-                            in.nextLine();
-                        }
-                    }
-                    else
-                    {
-                        System.out.println("ERROR: Input is not a Whole Number");
-                        in.nextLine();
-                    }
+                    editNode(in, "name", test);
                     break;
                 case "9":
                 case "edit address":
-                    System.out.print("Which contact number's Address would you like to edit?: ");
-                    if(in.hasNextInt())
-                    {
-                        int editAddressIndex = in.nextInt();
-                        if(editAddressIndex > 0 && editAddressIndex <= test.size())
-                        {
-                            editAddressIndex--; // index -1 to match index start 0 (shown as 1 to user)
-                            in.nextLine();
-                            System.out.print("Enter new address: ");
-                            String newAddress = in.nextLine();
-                            test.modifyAddress(editAddressIndex, newAddress);
-                        }
-                        else
-                        {
-                            System.out.println("ERROR: Number is not within range contacts");
-                            in.nextLine();
-                        }
-                    }
-                    else
-                    {
-                        System.out.println("ERROR: Input is not a Whole Number");
-                        in.nextLine();
-                    }
+                    editNode(in, "address", test);
                     break;
                 case "10":
                 case "edit city":
-                editNode(in, "city", test);
-                    /* 
-                    System.out.print("Which contact number's City would you like to edit?: ");
-                    if(in.hasNextInt())
-                    {
-                        int editCityIndex = in.nextInt();
-                        // if index is a real contact number
-                        if(editCityIndex > 0 && editCityIndex <= test.size())
-                        {
-                            editCityIndex--; // index -1 to match index start 0 (shown as 1 to user)
-                            in.nextLine();
-                            System.out.print("Enter new city: ");
-                            String newCity = in.nextLine();
-                            test.modifyCity(editCityIndex, newCity);
-                        }
-                        else
-                        {
-                            System.out.println("ERROR: Number is not within range contacts");
-                            in.nextLine();
-                        }
-                    }
-                    else
-                    {
-                        System.out.println("ERROR: Input is not a Whole Number");
-                        in.nextLine();
-                    }
-                    */
+                    editNode(in, "city", test);
                     break;
                 case "11":
                 case "edit phone number":
-                    System.out.print("Which contact number's Phone Number would you like to edit?: ");
-                    if(in.hasNextInt())
-                    {
-                        int editPhoneIndex = in.nextInt();
-                        // if index is a real contact number
-                        if(editPhoneIndex > 0 && editPhoneIndex <= test.size())
-                        {
-                            editPhoneIndex--; // index -1 to match index start 0 (shown as 1 to user)
-                            in.nextLine();
-                            System.out.print("Enter new phone number: ");
-                            String newPhoneNumber = in.nextLine();
-                            test.modifyPhoneNumber(editPhoneIndex, newPhoneNumber);
-                        }
-                        else
-                        {
-                            System.out.println("ERROR: Number is not within range contacts");
-                            in.nextLine();
-                        }
-                    }
-                    else
-                    {
-                        System.out.println("ERROR: Input is not a Whole Number");
-                        in.nextLine();
-                    }
+                    editNode(in, "phone number", test);
                     break;
                 case "0":
                 case "quit":
@@ -359,57 +261,62 @@ class TestClass
     public static void editNode(Scanner in, String nodeData, PhonebookManager test)
     {
         String newData = "";
-        System.out.print("Which contact number's "+nodeData+" would you like to edit?: ");
-        if(in.hasNextInt())
+        boolean correctIndexInputted = false;
+        while(!correctIndexInputted)
         {
-            int editIndex = in.nextInt();
-            // if index is a real contact number
-            if(editIndex > 0 && editIndex <= test.size())
+            System.out.print("Which contact number's "+nodeData+" would you like to edit? (currently at "+test.size()+" contacts): ");
+            if(in.hasNextInt())
             {
-                editIndex--; // index -1 to match index start 0 (shown as 1 to user)
-                in.nextLine();
-                // if not a changing name because it needs first and last name input
-                if(!nodeData.equalsIgnoreCase("name"))
+                int editIndex = in.nextInt();
+                // if index is a real contact number
+                if(editIndex > 0 && editIndex <= test.size())
                 {
-                    System.out.print("Enter new "+nodeData+": ");
-                    newData = in.nextLine();
+                    correctIndexInputted = true;
+                    editIndex--; // index -1 to match index start 0 (shown as 1 to user)
+                    in.nextLine();
+                    // if not a changing name because it needs first and last name input
+                    if(!nodeData.equalsIgnoreCase("name"))
+                    {
+                        System.out.print("Enter new "+nodeData+": ");
+                        newData = in.nextLine();
+                    }
+                    
+                    switch(nodeData.toLowerCase())
+                    {
+                        case "name":
+                            System.out.print("Enter new first name: ");
+                            newData = in.nextLine();
+                            test.modifyFirstName(editIndex, newData); 
+
+                            System.out.print("Enter new last name: ");
+                            newData = in.nextLine();
+                            test.modifyLastName(editIndex, newData);
+
+                            break;
+                        case "address":
+                            test.modifyAddress(editIndex, newData);
+                            break;
+                        case "city":
+                            test.modifyCity(editIndex, newData);
+                            break;
+                        case "phone number":
+                            test.modifyPhoneNumber(editIndex, newData);
+                            break;
+                        default: // tells user they used an invalid parameter otherwise
+                            throw new IllegalArgumentException("Not a Valid NodeData Parameter");
+                    }
                 }
-                
-                switch(nodeData.toLowerCase())
+                else
                 {
-                    case "name":
-                        System.out.print("Enter new first name: ");
-                        newData = in.nextLine();
-                        test.modifyFirstName(editIndex, newData); 
-
-                        System.out.print("Enter new last name: ");
-                        newData = in.nextLine();
-                        test.modifyLastName(editIndex, newData);
-
-                        break;
-                    case "address":
-                        test.modifyAddress(editIndex, newData);
-                        break;
-                    case "city":
-                        test.modifyCity(editIndex, newData);
-                        break;
-                    case "phone number":
-                        test.modifyPhoneNumber(editIndex, newData);
-                        break;
-                    default: // tells user they used an invalid parameter otherwise
-                        throw new IllegalArgumentException("Not a Valid NodeData Parameter");
+                    System.out.println("ERROR: Number is not within range contacts");
+                    in.nextLine();
                 }
             }
             else
             {
-                System.out.println("ERROR: Number is not within range contacts");
+                System.out.println("ERROR: Input is not a Whole Number");
                 in.nextLine();
             }
         }
-        else
-        {
-            System.out.println("ERROR: Input is not a Whole Number");
-            in.nextLine();
-        }
-    }
+    } // end of editNode method
 } // end of TestClass class

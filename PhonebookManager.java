@@ -7,18 +7,13 @@
 // to keep track of entries with sets of names, addresses, cities, and phone numbers
 // and to be to print out the entries in a clean, readable manner.
 
-// if newNode not working, check new overloaded constructor
-// decide whether first and last name should be in.next or in.nextLine
-
 // to do
-    // test newNode, delete, Search
     // clean up
-    // move front end if statements to methods
-    // make generic methods into one method? (search, modify, get)
+    // test editNode method
+    // make search methods in front end into 1 method
+    // <85 chars
+    // make sure phonebooksize is correct
     
-    // deal with extra spaces after a word for node data
-        // use .replace(" ", "") in search methods
-    // add isEmpty method
 
 import java.util.*;
 
@@ -140,6 +135,16 @@ class PhonebookManager
     {
         return phonebookSize;
     } // end of size method
+
+
+
+    public boolean isEmpty()
+    {
+        if(phonebookSize == 0)
+            {return true;}
+        else    
+            {return false;}
+    } // end of isEmpty method
 
 
     // returns a listnode at a certain index in phonebook
