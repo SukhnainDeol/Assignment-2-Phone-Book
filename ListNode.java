@@ -4,7 +4,7 @@
 // Assignment: Assignment 2: Phone Book
 
 // Purpose: Defines a Listnode class that is used to implement a linked list
-// in the class PhonebookManager.
+// in the PhonebookManager class.
 
 class ListNode
 {
@@ -16,7 +16,7 @@ class ListNode
     public ListNode next = null;
 
 
-    // constructor with all fields as parameters except next
+    // constructor with all fields as parameters 
     public ListNode(String firstName, String lastName, String address, String city, String phoneNumber, ListNode next)
     {
         this.firstName = firstName;
