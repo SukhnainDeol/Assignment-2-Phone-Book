@@ -44,7 +44,7 @@ class TestClass
                 case "add entry":
                     // turn into method
                     String[] newEntry = newEntryInput(in, test.size());
-                    test.newNode(newEntry[0], newEntry[1], newEntry[2], newEntry[3], newEntry[4], Integer.parseInt(newEntry[5])-1);
+                    test.add(newEntry[0], newEntry[1], newEntry[2], newEntry[3], newEntry[4], Integer.parseInt(newEntry[5])-1);
                     break;
                 case "2":
                 case "delete entry":

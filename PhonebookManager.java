@@ -13,7 +13,6 @@
     // make search methods in front end into 1 method
     // <85 chars
     // make sure phonebooksize is correct
-    
 
 import java.util.*;
 
@@ -21,20 +20,23 @@ class PhonebookManager
 {
     private ListNode firstEntry = null; // always at first node of linked list
     private ListNode lastNodeTracker = null; // always at last node of linked list (use a while != null statement instead?)
-    private int phonebookSize = 0; // used for .size() method
+    private int phonebookSize; // used for .size() method
 
 
     // constructor method that initalizes new node's values
     public PhonebookManager(String firstName, String lastName, String address, String city, String phoneNumber)
     {
         this.firstEntry = new ListNode(firstName, lastName, address, city, phoneNumber); // creates first node
-        this.lastNodeTracker = this.firstEntry; // assigns lastnodetracker to node
-        this.phonebookSize++;
+        this.lastNodeTracker = this.firstEntry; // assigns lastnodetracker to 
+        this.phonebookSize = 1;
     } // end of PhonebookManager constructor method
 
 
     // parameterless constructor
-    public PhonebookManager(){}
+    public PhonebookManager()
+    {
+        this.phonebookSize = 0;
+    }
 
 
 
@@ -42,7 +44,7 @@ class PhonebookManager
     // if at beginning index, reassign firstEntry field while another field holds all the fields and then 
     // reassign firstEntry back as the start of the linked list
     // else put a Listnode each at the node before and after where the new node will be and then add it and reattached the end 
-    public void newNode(String firstName, String lastName, String address, String city, String phoneNumber, int index) throws IndexOutOfBoundsException
+    public void add(String firstName, String lastName, String address, String city, String phoneNumber, int index) throws IndexOutOfBoundsException
     {
         // if there isnt a node yet
         if(firstEntry == null && index <= phonebookSize && index >= 0)
