@@ -93,10 +93,10 @@ class PhonebookManager
     {
         // if index out of range of total contacts
         if(index > phonebookSize-1 || index < 0) 
-        {   // send error
-            System.out.print("ERROR: Contact Number out of range of total");
-            System.out.println(" contact number of " + phonebookSize);
+        {   
             phonebookSize++; // add back size since its an error
+            // send error
+            throw new IndexOutOfBoundsException("Delete index out of range");
         } 
         else if(phonebookSize == 1) // if deleting last node left
         {   // all trackers reverted to null
@@ -142,13 +142,20 @@ class PhonebookManager
 
 
     // returns a listnode at a certain index in phonebook
-    public ListNode index(int index) throws NullPointerException
+    public ListNode index(int index) 
     {   // creates traveler ListNode
-        ListNode nodeTraveler = firstEntry;
-        // moves to specified index
-        for(int i = 0; i < index; i++)
-            {nodeTraveler = nodeTraveler.next;}
-        return nodeTraveler; // return node at index
+        if (index < 0 || index > phonebookSize-1)
+        {
+            throw new IndexOutOfBoundsException();
+        }
+        else 
+        {
+            ListNode nodeTraveler = firstEntry;
+            // moves to specified index
+            for(int i = 0; i < index; i++)
+                {nodeTraveler = nodeTraveler.next;}
+            return nodeTraveler; // return node at index
+        }
     } // end of index method
         
 

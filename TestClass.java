@@ -329,8 +329,8 @@ class TestClass
         {
             System.out.print("There are "+dataIndex.size()+" occurences of the ");
             System.out.println(nodeData+" "+searchData+" in the phonebook.");
-            System.out.println("These occurences are in the following contact");
-            System.out.print(" numbers: ");
+            System.out.print("These occurences are in the following contact");
+            System.out.println(" numbers: ");
             int addressIndexSize = dataIndex.size();
             for(int i = 0; i < addressIndexSize; i++) // print each name from queue
                 {System.out.println("Contact Number " + (dataIndex.remove()+1));}
