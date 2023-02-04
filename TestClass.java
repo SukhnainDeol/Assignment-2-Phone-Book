@@ -234,8 +234,9 @@ class TestClass
         boolean correctIndexInputted = false; // if valid index inputted
         while(!correctIndexInputted)
         {   // asks for which contact number's data to edit
-            System.out.print("Which contact number's "+nodeData+" would you like");
-            System.out.print(" to edit? (currently at "+test.size()+" contacts): ");
+            System.out.print("Which contact number's "+nodeData+" would you ");
+            System.out.print("like to edit? (currently at "+test.size());
+            System.out.print(" contacts): ");
             if(in.hasNextInt()) // if an int inputted
             {
                 editIndex = in.nextInt(); // takes in int
