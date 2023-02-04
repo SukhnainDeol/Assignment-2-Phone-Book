@@ -12,8 +12,8 @@ import java.util.*;
 
 class PhonebookManager
 {
-    private ListNode firstEntry = null; // always at first node of linked list
-    private ListNode lastNodeTracker = null; // always at last node of linked list 
+    private ListNode firstEntry = null; // first node of linked list
+    private ListNode lastNodeTracker = null; // last node of linked list 
     private int phonebookSize; // used for .size() method
 
 
@@ -37,10 +37,9 @@ class PhonebookManager
 
     // parameters are from each field in ListNode
 
-    // creates a new ListNode with all fields necessary taking care of circumstances
-    // such as a new first node, last node, or adding the first node in the list yet
+    // creates a new ListNode with all fields given values
     public void add(String firstName, String lastName, String address,
-     String city, String phoneNumber, int index) throws IndexOutOfBoundsException
+     String city, String phoneNumber, int index) 
     {
         // if there isnt a node yet
         if(firstEntry == null && index <= phonebookSize && index >= 0)
@@ -56,8 +55,8 @@ class PhonebookManager
             // index is between 0 and size+1 
             // (phonebook size is already +1 cause of index starting at 0)
             if(index <= phonebookSize && index >= 0)
-            {
-                ListNode nodeTraveler = firstEntry; // starts traveler at first node
+            {   // starts traveler at first node
+                ListNode nodeTraveler = firstEntry; 
                 if(index == 0) // if new first node
                 {
                     // reassign first node
@@ -96,7 +95,7 @@ class PhonebookManager
         {   
             phonebookSize++; // add back size since its an error
             // send error
-            throw new IndexOutOfBoundsException("Delete index out of range");
+            throw new IndexOutOfBoundsException("Index out of range");
         } 
         else if(phonebookSize == 1) // if deleting last node left
         {   // all trackers reverted to null
@@ -171,7 +170,7 @@ class PhonebookManager
             nodeTraveler.lastName;
             toString += "\nAddress: " + nodeTraveler.address;
             toString += "\nCity: " + nodeTraveler.city;
-            toString += "\nPhone Number: " + nodeTraveler.phoneNumber + "\n\n";
+            toString += "\nPhone Number: "+nodeTraveler.phoneNumber+"\n\n";
             nodeTraveler = nodeTraveler.next;   
         }
         return toString;
@@ -247,7 +246,7 @@ class PhonebookManager
 
 
 
-    // series of mutator methods that modifiy a specific indexed node's data type
+    // series of mutator methods that modifiy a node's data type
     public void modifyFirstName(int index, String newFirstName)
     {
         ListNode modifiedData = index(index); // goes to specified node
@@ -288,7 +287,7 @@ class PhonebookManager
 
 
 
-    // series of accessor methods that retreive data from a specific indexed node
+    // series of accessor methods that retreive data from a node
     public String getFirstName(int index, String data)
     {
         ListNode get = index(index); // goes to specified node

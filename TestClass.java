@@ -26,7 +26,7 @@ class TestClass
             // if phonebook empty, ask user to create a new entry first
             if(test.size() == 0 && !(command.equals("1") || 
             command.toLowerCase().equals("add entry")))
-            {   // if quitting, break out of if statement (proceeds to switch/case)
+            {   // if quitting, break from if statement, proceeds to switch/case
                 if(command.equals("0") || 
                 command.toLowerCase().equals("quit"))
                     {break;}
@@ -52,7 +52,7 @@ class TestClass
                 case "2":
                 case "delete entry":
                     System.out.print("\nEnter Contact Number to Delete: ");
-                    int deleteIndex; // index (starting from 1) of entry to delete
+                    int deleteIndex; // index (starts at 1) of entry to delete
                     if(in.hasNextInt()) // if int is inputted
                     {   // deletes entry at deletetIndex value from phonebook
                         deleteIndex = in.nextInt();
@@ -60,7 +60,9 @@ class TestClass
                         test.delete(deleteIndex-1); 
                     }
                     else // prints error message
-                        {System.out.println("ERROR: Input is not a Whole Number");}
+                    {
+                        System.out.println("ERROR: Input is not a Whole Number");
+                    }
                     break;
                 case "3":
                 case "view phonebook":
@@ -88,22 +90,22 @@ class TestClass
                     break;
                 case "8":
                 case "edit name":
-                    // asks which contact number's data to edit and the new value 
+                    // asks which contact number's name to edit and  new value
                     editNode(in, "name", test); 
                     break;
                 case "9":
                 case "edit address":
-                    // asks which contact number's data to edit and the new value 
+                    // asks which contact number's address to edit and new value
                     editNode(in, "address", test);
                     break;
                 case "10":
                 case "edit city":
-                    // asks which contact number's data to edit and the new value 
+                    // asks which contact number's city to edit and new value
                     editNode(in, "city", test);
                     break;
                 case "11":
                 case "edit phone number":
-                    // asks which contact number's data to edit and the new value 
+                    // asks which contact number's phone # to edit and new value
                     editNode(in, "phone number", test);
                     break;
                 case "0":
@@ -125,7 +127,7 @@ class TestClass
 
 
     // displays to the user what commands they have access to
-    // both number and command name will work in the program (upper or lower case)
+    // both number and command name will work (upper or lower case)
     public static void printMenu()
     {
         System.out.println("Please choose one of the following menu options:");
@@ -147,8 +149,8 @@ class TestClass
 
 
     
-    // parameters for scanner and size of phonebook in order for method to
-    // know valid range of contact numbers the user can input
+    // parameters for scanner and size of phonebook in order for method
+    // to know valid range of contact numbers the user can input
 
     // asks user to input each field of the node (excluding next node)
     // as well as the contact number the new node will be shown as
@@ -195,11 +197,12 @@ class TestClass
                 newEntry[5] = in.next(); // add new input
                 // parse int converts string to int 
                 int contactNumber = Integer.parseInt(newEntry[5]);
-                // if new entry is a contact number in phonebook or next available
+                // if new entry is contact number in phonebook or next available
                 if(contactNumber <= phonebookSize+1 && contactNumber > 0)
                     {correctIndex = true;} // ends loop
                 else
-                {// print error, size of phonebook, and valid range of contact number
+                {   // print error, size of phonebook,
+                    // and valid range of contact number
                     System.out.print("\nERROR: Index Not Within Than Phonebook");
                     System.out.println(" Size of "+phonebookSize);
 
@@ -217,8 +220,8 @@ class TestClass
 
 
 
-    // parameters are for scanner, which node data to ask the user about and the 
-    // phonebookmanager in order to alter the data and know the size of the phonebook
+    // parameters are scanner, which node data to ask the user about and the 
+    // phonebookmanager to alter the data and know the size of the phonebook
 
     // asks user for what contact number's data they would like to change and 
     // then asks for the new value of that data
@@ -227,8 +230,8 @@ class TestClass
     {
         nodeData = nodeData.toLowerCase();
         int editIndex = 0; // index of node to edit
-        String newData = ""; // new value of specific nodedata that will be changed
-        boolean correctIndexInputted = false; // check if valid index inputted
+        String newData = ""; // new value of nodedata that will be changed
+        boolean correctIndexInputted = false; // if valid index inputted
         while(!correctIndexInputted)
         {   // asks for which contact number's data to edit
             System.out.print("Which contact number's "+nodeData+" would you like");
@@ -241,7 +244,8 @@ class TestClass
                     {correctIndexInputted = true;} // ends loop
                 else
                 {   // sends error
-                    System.out.println("ERROR: Number is not within range contacts");
+                    System.out.print("ERROR: Number is not ");
+                    System.out.println("within range contacts");
                     in.nextLine(); // clears line for next input
                 }
             }
@@ -283,18 +287,19 @@ class TestClass
                 test.modifyPhoneNumber(editIndex, newData);
                 break;
             default: // tells user they used an invalid parameter by default
-                throw new IllegalArgumentException("Not a Valid NodeData Parameter");
+                throw new IllegalArgumentException("Invalid NodeData Parameter");
         } // end of switch/case
     } // end of editNode method
 
 
 
-    // parameters are for scanner, which node data to search and the phonebook 
-    // manager in order to search the data 
+    // parameters are for scanner, which node data to search and the 
+    // phonebookmanager in order to search the data 
 
-    // asks user what they want to search and if its in the phonebook, print which 
-    // contact number(s) have it, otherwise print that it doesn't exist in phonebook
-    public static void searchNode(Scanner in, String nodeData, PhonebookManager test)
+    // asks user what they want to search. if its in the phonebook, print which 
+    // contact number(s) have it, otherwise print that it doesn't exist 
+    public static void searchNode(Scanner in, String nodeData,
+     PhonebookManager test)
     {
         nodeData = nodeData.toLowerCase();
         System.out.print("\nEnter the "+nodeData+" to Search: ");
@@ -316,24 +321,26 @@ class TestClass
                 dataIndex = test.searchPhoneNumber(searchData);
                 break;
             default: // tells user they used an invalid parameter by default
-                throw new IllegalArgumentException("Not a Valid NodeData Parameter");
+            throw new IllegalArgumentException("Invalid NodeData Parameter");
         }
         if(dataIndex.size() == 0) // if no addresses found
             {System.out.println("ERROR: "+nodeData+" not found");}
         else if(dataIndex.size() == 1) // if one instance of address found                           
         {
-            System.out.print("The person with the "+nodeData+" "+searchData+" has ");
-            System.out.println("their information in contact "+(dataIndex.remove()+1));
+            System.out.print("The person with the "+nodeData+" ");
+            System.out.print(searchData+" has their information in ");
+            System.out.println("contact "+(dataIndex.remove()+1));
         }
         else // if multiple instances of address found
         {
-            System.out.print("There are "+dataIndex.size()+" occurences of the ");
-            System.out.println(nodeData+" "+searchData+" in the phonebook.");
+            System.out.print("There are "+dataIndex.size()+" occurences of the");
+            System.out.println(" "+nodeData+" "+searchData+" in the phonebook.");
             System.out.print("These occurences are in the following contact");
             System.out.println(" numbers: ");
             int addressIndexSize = dataIndex.size();
-            for(int i = 0; i < addressIndexSize; i++) // print each name from queue
-                {System.out.println("Contact Number " + (dataIndex.remove()+1));}
+            // print each name from queue
+            for(int i = 0; i < addressIndexSize; i++) 
+                {System.out.println("Contact Number "+(dataIndex.remove()+1));}
         }
     } // end of searchNode method
 } // end of TestClass class
