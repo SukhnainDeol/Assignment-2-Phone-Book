@@ -296,7 +296,7 @@ class TestClass
     // parameters are for scanner, which node data to search and the 
     // phonebookmanager in order to search the data 
 
-    // asks user what they want to search. if its in the phonebook, print which 
+    // asks user what to search. if its in the phonebook, print which 
     // contact number(s) have it, otherwise print that it doesn't exist 
     public static void searchNode(Scanner in, String nodeData,
      PhonebookManager test)
