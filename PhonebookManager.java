@@ -145,9 +145,7 @@ class PhonebookManager
     public ListNode index(int index) 
     {   // creates traveler ListNode
         if (index < 0 || index > phonebookSize-1)
-        {
-            throw new IndexOutOfBoundsException();
-        }
+            {throw new IndexOutOfBoundsException();}
         else 
         {
             ListNode nodeTraveler = firstEntry;
