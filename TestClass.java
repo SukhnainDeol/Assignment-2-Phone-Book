@@ -155,7 +155,7 @@ class TestClass
     // returns each of the values as a string array
     public static String[] newEntryInput(Scanner in, int phonebookSize) 
     {
-        // bool that loops until a valid contact # is inputted
+        // boolean that loops until a valid contact # is inputted
         boolean correctIndex = false; 
         String[] newEntry = new String[6]; // array to hold new entry info
         
