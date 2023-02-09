@@ -6,20 +6,20 @@
 // Purpose: Defines a Listnode class that is used to implement a linked list
 // in the PhonebookManager class.
 
-class ListNode
+class ListNode5
 {
     public String firstName = null;
     public String lastName = null;
     public String address = null;
     public String city = null;
     public String phoneNumber = null;
-    public ListNode next = null;
+    public ListNode5 next = null;
 
 
     
     // constructor with all fields as parameters 
-    public ListNode(String firstName, String lastName, 
-    String address, String city, String phoneNumber, ListNode next)
+    public ListNode5(String firstName, String lastName, 
+    String address, String city, String phoneNumber, ListNode5 next)
     {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -32,7 +32,7 @@ class ListNode
 
 
     // constructor with all fields as parameters except next
-    public ListNode(String firstName, String lastName, 
+    public ListNode5(String firstName, String lastName, 
     String address, String city, String phoneNumber)
     {
         // calls full paremeter constructor but makes next field null
@@ -42,5 +42,5 @@ class ListNode
     
 
     // no paremeter constructor
-    public ListNode() {}
+    public ListNode5() {}
 } // end of ListNode class

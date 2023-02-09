@@ -8,12 +8,12 @@
 
 import java.util.*;
 
-class TestClass
+class TestClass5
 {
     public static void main(String[] args)
     {
         // creates test phonebookmanager object to showcase  
-        PhonebookManager test = new PhonebookManager();
+        PhonebookManager5 test = new PhonebookManager5();
 
         Scanner in = new Scanner(System.in); // takes in user input
         boolean inUse = true; // used to loop program until user quits
@@ -226,7 +226,7 @@ class TestClass
     // asks user for what contact number's data they would like to change and 
     // then asks for the new value of that data
     public static void editNode(Scanner in, String nodeData, 
-    PhonebookManager test) throws IllegalArgumentException
+    PhonebookManager5 test) throws IllegalArgumentException
     {
         nodeData = nodeData.toLowerCase();
         int editIndex = 0; // index of node to edit
@@ -300,7 +300,7 @@ class TestClass
     // asks user what to search. if its in the phonebook, print which 
     // contact number(s) have it, otherwise print that it doesn't exist 
     public static void searchNode(Scanner in, String nodeData,
-     PhonebookManager test)
+     PhonebookManager5 test)
     {
         nodeData = nodeData.toLowerCase();
         System.out.print("\nEnter the "+nodeData+" to Search: ");
