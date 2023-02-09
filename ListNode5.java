@@ -3,8 +3,8 @@
 // Date 01/24/2023
 // Assignment: Assignment 2: Phone Book
 
-// Purpose: Defines a Listnode class that is used to implement a linked list
-// in the PhonebookManager class.
+// Purpose: Defines a Listnode class that is used to 
+// implement a linked list in the PhonebookManager class.
 
 class ListNode5
 {
